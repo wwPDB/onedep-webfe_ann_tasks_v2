@@ -1,0 +1,195 @@
+data_validation_question
+#
+loop_
+_rcsb_question_category.question
+_rcsb_question_category.text
+'Structure Factor - high R-factors, low correlation'
+;Section 4 (Data refinement and statistics) of the validation report shows high
+R-factors and/or low correlation coefficient.  The correct structure factor file
+should be re-uploaded at the deposition interface.
+;
+
+'Structure Factor - incomplete data'
+;Section 4 (Data refinement and statistics) of the validation report shows
+indicates that the structure factor file is incomplete. Please re-load the correct
+structure factor file at the deposition interface.
+;
+
+'Atomic Clashes'
+;Section 5.2 (Close contacts) of the validation report, includes at least one
+physically unrealistic interatomic distance. Please upload a new coordinate file
+resolving any issues or send correspondence clarifying the situation. 
+;
+
+'Polymer Geometry'
+;Section 5.1 (Standard geometry) of the validation report indicates issues with the
+geometry in your polymer chains. Please upload a corrected file to the deposition
+interface.
+;
+
+'Ligand Chemistry'
+;There are outstanding issues with the geometry of certain ligands in your entry.
+Please refer to section 5.6 (Ligand geometry) of the validation report. It is
+possible that the species in your coordinates do not match the PDB chemical
+component dictionary due to errors in your refinement dictionaries or possibly in
+the assignment made by us. Please review section 2 (Entry composition) to ensure
+that the proper ligands were chosen.
+
+If necessary, please upload new coordinates or communicate with us anything unusual
+(i.e.  binding) about your non-polymers.
+;
+
+'Chirality Error'
+;The validation report in section 5.1 (Standard geometry) or 5.4 (non-stanard
+residues in protein, DNA, RNA chains) or 5.6 (Ligand geometry) highlight chirality
+errors in your model. These errors are indicated by a CAVEAT record in your PDB
+file. Please upload new coordinates to resolve the issue.
+;
+
+'Phi/Psi Torsion Angles'
+;Section 5.3 (torsion angles) of the validation report highlights an unusually
+large number of Ramachandran outliers that you may wish to address. Please upload
+a new coordinate file with any corrections.
+;
+
+'Fit of model to data RSR Z-score'
+;Section 6 (Fit of model and data) of the validation report indicates a number of
+RSR-Z outliers in an electron density map calculated with your data. Please
+examine the outliers and upload a new coordinate and/or structure factor file if
+appropriate.
+;
+
+'Keywords'
+;Verify the keywords and make sure that they reflect the primary functional and
+structural features of the structure.
+;
+
+'Database Sequence Discrepancies'
+;Please confirm all sequence advisories in section 1 of the validation report.
+;
+
+'Mismatches Involving ALA/GLY'
+;Mismatches involving ALA/GLY were found between the provided sequence and that
+derived from the coordinates. Assuming the side chains are missing due to disorder,
+the residue names in the coordinates have been changed to match the sequence.
+;
+
+'N-terminal Sequence'
+;The residues 'INSERT SEQ' were added to the N-terminus, assuming these residues are
+missing due to disorder. Is this correct?
+;
+
+'C-terminal Sequence'
+;The residues 'INSERT SEQ' were added to the C-terminus, assuming these residues are
+missing due to disorder. Is this correct?
+;
+
+'Inconsistent Resolution Limits'
+;The high resolution limits for refinement, data collection the the structure
+factor file are inconsistent (Section 4 of the validation report). Please clarify
+and provide correct values.
+;
+
+'Source'
+;Verify the source organism.
+;
+
+'Expression Host'
+;If the protein has been genetically manipulated, provide the scientific name for
+the host expression system and plasmid details.
+;
+
+'No Database Sequence Match'
+;Using BLAST, we were unable to find an appropriate sequence database match in the
+UniProt database. Please note that we only use UniProt as sequence database reference.
+You may submit your sequence information via SPIN (the UniProtKB submission tool) at
+ http://www.ebi.ac.uk/swissprot/Submissions/spin/index.jsp for directly sequenced
+proteins, or to EMBL/GenBank/DDBJ where the nucleotide sequence is available.
+;
+
+'Terminal Oxygen(s)'
+;The terminal oxygens (OXT) which are not the terminal residue of the sequence
+have either been removed.
+
+The terminal oxygens (OXT) which are not the terminal residue of the sequence
+have been renamed to the next residue. 
+;
+
+'LINK Records'
+;Verify the link records.
+;
+
+'Data Collection Date'
+;Provide the data collection date for the experiment.
+;
+
+'MAD Wavelengths'
+;Provide all the wavelengths for the MAD experiment.
+;
+
+'Starting Model'
+;Provide the PDB code of the starting model used for molecular replacement.
+;
+
+'Citation Title/Authors'
+;Currently the title and/or authors of the entry have also been used for the
+primary citation.
+;
+
+'Best Representative Conformer'
+;The best representative conformer 'INSERT NUMBER' was moved to MODEL 1.
+;
+
+'Matthew Coefficient'
+;The calculated Matthews coefficient and solvent content are not within the
+accepted range. Verify these values.
+;
+
+'Entry Title'
+;The titles of your related entries are identical. We encourage you to provide
+unique titles for the related entries.
+;
+
+'E.C. Number'
+;Provide the E.C. number for this protein if available.
+;
+
+'TargetDB ID'
+;Provide the TargetDB ID for this protein if available.
+;
+
+'BMRB ID'
+;Provide the BMRB ID.
+;
+
+'Atoms on Special Positions'
+;The following atoms are present on a special position.
+
+%(special_atoms)s
+
+Please check the occupancy of such atoms.
+;
+
+'Related Entries'
+;Since you have deposited several related entries, we will wait for your response
+to the validation report for this entry before processing the other entries, so
+that we can incorporate the changes to all related entries.
+;
+
+'Fixed Residual B'
+;The PDB format specification defines the B-factor column to contain the full
+rather than the residual B factor. The B factors have been converted to total
+B during data processing. You may send us new coordinates with full B factors
+if you prefer to correct it yourself. 
+;
+
+'Header'
+;The header '%(header)s' has been selected for the entry.
+If this is not correct, select a header from the list available in:
+ftp://ftp.wwpdb.org/pub/pdb/doc/format_descriptions/class.dat
+;
+
+'Change of Status for PSI'
+;We have changed the status of the entry to REL, since your submission is a PSI
+project. According to PSI policy, these entries should be released immediately.
+;

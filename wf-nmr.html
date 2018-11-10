@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!--#include virtual="/ann_tasks_v2/includes/head_common_bs.html"-->
+    <title>Annotation Tasks Module</title>
+  </head>
+  <body>
+    <div id="wrap">
+      <!--#include virtual="/ann_tasks_v2/includes/page_header_bs.html"-->
+
+      <div class="container">
+	    <div class="page-header">
+	      <h3>Annotation Tasks  <small>NMR Options</small> 	    <small id="span_identifier" class="pull-right displaynone"> </small></h3>
+	    </div>
+	    <div id="task-alt-dialog"></div>
+
+            <div id="nmr-cs-editor-dialog">
+                <div id="cs-table-container" class="row displaynone">
+                  <form id="csEditorForm">
+                    <div class="form-group">
+                      <input class="btn btn-primary pull-right" id="cs-update-button" type = "submit" value = "Update" /><br />
+                    </div>
+                    <div><span id="cs-content"></span></div>
+                  </form>
+                </div>
+            </div>
+
+	    <div id="nmr-tasks-dialog">
+              <br class="clearfloat" />
+	      <div id="diagnostics_box" class="msg_box fltlft"></div>
+              <br class="clearfloat" />
+
+	        <!-- File upload form 
+	        <form id="upload-cs-auth" enctype="multipart/formdata" action="/service/ann_tasks_v2/uploadmulti" method="post" class="form-inline" role="form">
+	          <fieldset>
+	            <legend>Upload author provided chemical shift data file <a href="wf-help.html"> <span class="glyphicon glyphicon-info-sign pull-right"></span> </a> </legend>
+
+	            <div class="form-group">
+		          <label for="file1" class="label-control">File</label>
+		          <input class="form-control" type="file" id="file1" name="file" value="" />
+	            </div>
+
+	            <div class="form-group">
+		          <label for="cs-auth-name-1" class="label-control">Shift section name</label>
+		          <input type="text" name="cs-auth-name" id="cs-auth-name-1" value="" placeholder="my_shifts-1" class="form-control">
+	            </div>
+	            <input class="btn btn-primary" type="submit" value="Upload" />              &nbsp;&nbsp;
+
+	            <div id="id-form-status" class="op-status"></div>
+                <div class="my-task-form-status"></div>
+                <div class="my-task-form-links"></div>
+
+	          </fieldset>
+	          <input  name="standalone"    TYPE="hidden" VALUE="y">
+	          <input id="formid" name="formid" type="hidden" value="cs_auth_file_upload" />
+
+	        </form> -->
+
+	        <!--  Tasks section -->
+
+
+            <div id="task-dialog">
+                <!-- <form id="nmr-cs-upload-check-form" method="post" class="form-inline" role="form">
+                <fieldset>
+	              <legend>Combine and check author provided chemical shift data (uploaded above) <a href="wf-help.html"> <span class="glyphicon glyphicon-info-sign pull-right"></span> </a> </legend>
+                  <input class="btn btn-primary my-task-form-submit" type="submit" value="Combine and check" />
+                  <div class="my-task-form-status"></div>
+                  <div class="my-task-form-links"></div>
+                </fieldset>
+              </form>
+
+	          <form id="nmr-cs-atom-name-check-form" method="post" class="form-inline" role="form">
+                <fieldset>
+	              <legend>Chemical shift data nomenclature correspondence check <a href="wf-help.html"> <span class="glyphicon glyphicon-info-sign pull-right"></span> </a> </legend>
+                  <input class="btn btn-primary my-task-form-submit" type="submit" value="Atom nomenclature check" />
+                  <div class="my-task-form-status"></div>
+                  <div class="my-task-form-links"></div>
+                </fieldset>
+              </form>
+
+	          <form id="nmr-cs-update-form" method="post" class="form-inline" role="form">
+                <fieldset>
+	              <legend>Update the chemical shift file nomenclature changes in the current model <a href="wf-help.html"> <span class="glyphicon glyphicon-info-sign pull-right"></span> </a> </legend>
+                  <input class="btn btn-primary my-task-form-submit" type="submit" value="Update CS file" />
+                  <div class="my-task-form-status"></div>
+                  <div class="my-task-form-links"></div>
+                </fieldset>
+              </form> -->
+
+              <!-- CS file archive update
+              <form id="nmr-cs-update-archive-form" class="form-inline" method="post" role="form">
+                <fieldset>
+	              <legend>Copy session chemical shift data file to archive storage<a href="wf-help.html"> <span class="glyphicon glyphicon-info-sign pull-right"></span> </a> </legend>
+                  <input class="btn btn-primary my-task-form-submit"  type="submit" value="Update the archive CS file" />
+                  <div class="my-task-form-status"></div>
+                  <div class="my-task-form-links"></div>
+                </fieldset>
+              </form> -->
+
+              <!--  CS miscellaneous checks
+              <form id="nmr-cs-misc-checks-form" method="post" class="form-inline" role="form">
+                <fieldset>
+                  <legend>Chemical shift data miscellaneous checks <a href="wf-help.html"> <span class="glyphicon glyphicon-info-sign pull-right"></span> </a> </legend>
+                  <input class="btn btn-primary my-task-form-submit" type="submit" value="CS miscellaneous checks" />
+                  <div class="my-task-form-status"></div>
+                  <div class="my-task-form-links"></div>
+                </fieldset>
+              </form> -->
+
+              <!--  CS processing task -->
+              <form id="nmr-cs-processing-form" method="post" class="form-inline" role="form">
+                <fieldset>
+                  <legend>Chemical shift processing<a href="wf-help.html"> <span class="glyphicon glyphicon-info-sign pull-right"></span> </a> </legend>
+                  <input class="btn btn-primary my-task-form-submit" type="submit" value="Click to re-run CS processing task" disabled />
+                  <div class="my-task-form-status"></div>
+                  <div class="my-task-form-links"></div>
+                </fieldset>
+              </form>
+
+              <!--  CS editing task -->
+              <form id="nmr-cs-edit-form" method="post" class="form-inline" role="form">
+                <fieldset>
+                  <legend>Chemical shift editor<a href="wf-help.html"> <span class="glyphicon glyphicon-info-sign pull-right"></span> </a> </legend>
+                  <input class="btn btn-primary my-task-form-submit" type="submit" value="Launch editor" disabled />
+                  <div class="my-task-form-status"></div>
+                  <div class="my-task-form-links"></div>
+                </fieldset>
+              </form>
+
+              <!-- representative model update form -->
+              <form id="nmr-rep-model-update-form" class="form-inline" method="post" role="form">
+                <fieldset>
+	              <legend>Representative model update<a href="wf-help.html"> <span class="glyphicon glyphicon-info-sign pull-right"></span> </a> </legend>
+
+	              <div class="form-group">
+		            <label class="control-label" for="nmr-rep-model-update-form-inp-1">Representative model number:</label>
+		            <input id="nmr-rep-model-update-form-inp-1" class="form-control" type="text" name="task-form-args"  value="" size="5" placeholder="1"/>
+	              </div>
+
+                  <input class="btn btn-primary my-task-form-submit"  type="submit" value="Update representative model" />
+                  <div class="my-task-form-status"></div>
+                  <div class="my-task-form-links"></div>
+                </fieldset>
+              </form>
+            </div> <!-- end of task dialog -->
+
+	        <div id="uploadProgress">
+	          <h4>Upload progress:</h4>
+	          <div class="progress">
+	            <div class="bar"></div >
+	            <div class="percent">0%</div>
+	          </div>
+	          <div id="status"></div>
+	        </div>
+
+
+	        <!-- progress spinner -->
+	        <div id="loading">
+	          <div id="loadingcontent">
+	            <p id="loadingspinner">
+	              Running ...
+	            </p>
+	          </div>
+	        </div>
+
+
+          </div> <!-- nmr task dialog -->
+        </div><!--  mainContent container-->
+      </div> <!-- end wrap -->
+
+      <!--#include virtual="/ann_tasks_v2/includes/page_footer_bs.html"-->
+      <!--#include virtual="/ann_tasks_v2/includes/page_javascript_bs.html"-->
+
+  </body>
+</html>

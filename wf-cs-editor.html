@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!--#include virtual="/ann_tasks_v2/includes/head_common_bs.html"-->
+    <title>Annotation Tasks Module</title>
+  </head>
+  
+  <body>
+    <div id="wrap">
+      
+      <!-- Common page navigation -->
+      <!--#include virtual="/ann_tasks_v2/includes/page_header_bs.html"-->
+      
+      
+      <div class="container">        <!-- Begin main page content container -->
+	<div class="page-header"> 
+	  <h3>Annotation Tasks  <small>Chemical Shift Editor</small> 	    <small id="span_identifier" class="pull-right displaynone"> </small></h3>
+	</div>
+	
+	
+	<!--  CS editor section -->
+	<div id="cs-dialog" title="Chemical Shift Editor View">
+          <div><span id="cs-button-label"> </span></div>
+	</div>
+	<!-- progress spinner -->
+	<div id="loading">
+	  <div id="loadingcontent">
+            <p id="loadingspinner">
+              Running ...
+            </p>
+	  </div>
+	</div>
+	
+	<br/>
+	
+	<div class="panel-group" id="instruction">
+	  <div class="panel panel-default">
+	    <div class="panel-heading">
+	      <h4 class="panel-title">
+		<a data-toggle="collapse" data-parent="#instruction" href="#collapseOne">
+		  Instructions
+		</a>
+	      </h4>
+	    </div>
+	    <div id="collapseOne" class="panel-collapse collapse">
+	      <div class="panel-body">
+		<ul>
+		</ul>
+	      </div>
+	    </div>
+
+	  </div>
+	</div>
+      
+	<!-- Data Table -->
+	<div id="cs-table-container" class="row">                       
+	  <form id="csEditorForm">
+	    <div class="form-group">
+	      <input class="btn btn-primary pull-right" id="cs-update-button" type = "submit" value = "Update" /><br />
+	    </div>
+            <div><span id="cs-content"></span></div>
+	  </form>
+	</div>
+	
+      </div> <!-- End main page content container -->
+      
+    </div> <!-- end wrap -->
+
+    <!--#include virtual="/ann_tasks_v2/includes/page_javascript_bs.html"-->
+    <!--#include virtual="/ann_tasks_v2/includes/page_footer_bs.html"-->
+  </body>
+</html>
+

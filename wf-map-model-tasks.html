@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!--#include virtual="/ann_tasks_v2/includes/head_common_bs.html"-->
+    <title>Annotation Tasks Module</title>
+  </head>
+  
+  <body>
+    <div id="wrap">
+      
+      <!-- Common page navigation -->
+      <!--#include virtual="/ann_tasks_v2/includes/page_header_bs.html"-->
+      
+      
+      <div class="container">        <!-- Begin main page content container -->
+	<div class="page-header"> 
+	  <h3>Annotation Tasks  <small>Map/Model Task Options</small> 	    <small id="span_identifier" class="pull-right displaynone"> </small></h3>
+	</div>
+
+
+	<!--  Tasks section -->
+	<div id="task-alt-dialog"></div>
+
+	<div id="task-dialog" title="Task Calculations">
+
+
+          <!-- Map calculation form -->
+          <form id="mapcalc-task-form" class="form-inline" role="form"> 
+            <fieldset>
+	      <legend>Map calculation <a href="wf-help.html"> <span class="glyphicon glyphicon-info-sign pull-right"></span> </a> </legend>
+
+	      <div class="form-group">	      
+		<label class="control-label" for="mapcalc-task-form-inp-1">Options:</label>
+		<input id="mapcalc-task-form-inp-1" class="form-control" type="text" name="task-form-args"  value="" size="80" placeholder="Command line arguments"/> 
+	      </div>
+
+              <input class="btn btn-primary my-task-form-submit"  type="submit" value="Run"/> 
+              <div class="my-task-form-status"></div>
+              <div class="my-task-form-links"></div>
+            </fieldset>
+          </form>
+
+          <!-- Non-polymer CC local map calculation form -->
+          <form id="npcc-mapcalc-task-form" class="form-inline" role="form"> 
+            <fieldset>
+	      <legend>Non-polymer local map calculation <a href="wf-help.html"> <span class="glyphicon glyphicon-info-sign pull-right"></span> </a> </legend>
+
+	      <div class="form-group">	      
+		<label class="control-label" for="npcc-mapcalc-task-form-inp-1">Options:</label>
+		<input id="npcc-mapcalc-task-form-inp-1" class="form-control" type="text" name="task-form-args"  value="" size="80" placeholder="Command line arguments"/> 
+	      </div>
+
+              <input class="btn btn-primary my-task-form-submit"  type="submit" value="Run"/> 
+              <div class="my-task-form-status"></div>
+              <div class="my-task-form-links"></div>
+            </fieldset>
+          </form>
+
+          <!-- Move by sym_op -->
+          <form id="trans-coord-task-form"  enctype="multipart/formdata" class="form-inline" role="form">   
+            <fieldset>
+	      <legend>Transform Coordinates <a href="wf-help.html"> <span class="glyphicon glyphicon-info-sign pull-right"></span> </a> </legend>
+
+	      <div class="form-group">	      
+		<label class="control-label" for="trans-coord-task-form-inp-1">Instruction file name</label>
+		<input id="trans-coord-task-form-inp-1" class="form-control" type="file" name="transfile"  value="" size="60" /> 
+	      </div>
+
+	      <div class="form-group">	      
+		<label class="control-label" for="trans-coord-task-form-inp-2">File type</label> 
+		<select id="trans-coord-task-form-inp-2" class="form-control" name="transfiletype" columns="3">
+                  <option selected="selected"    value="symop">Symmerty Operators</option>
+                  <option                        value="matrix">Matrix Operators</option>
+		</select>
+	      </div>
+
+              <input class="btn btn-primary my-task-form-submit"  type="submit" value="Run"/> 
+              <div class="my-task-form-status"></div>
+              <div class="my-task-form-links"></div>
+
+            </fieldset>
+          </form>
+
+          <!-- Special position calculation form -->
+          <form id="special-position-task-form" class="form-inline" role="form"> 
+            <fieldset>
+	      <legend>Special position check <a href="wf-help.html"> <span class="glyphicon glyphicon-info-sign pull-right"></span> </a> </legend>
+
+	      <div class="form-group">	      
+		<label class="control-label" for="special-position-task-form-inp-1">Options:</label>
+		<input id="special-position-task-form-inp-1" class="form-control" type="text" name="task-form-args"  value="" size="80" placeholder="Command line arguments"/> 
+	      </div>
+
+              <input class="btn btn-primary my-task-form-submit"  type="submit" value="Run"/> 
+              <div class="my-task-form-status"></div>
+              <div class="my-task-form-links"></div>
+
+            </fieldset>
+          </form>
+
+
+          <!-- Special position calculation form 
+          <form id="reassign-altids-task-form" class="form-inline" role="form"> 
+            <fieldset>
+	      <legend>Reassign Alt Ids <a href="wf-help.html"> <span class="glyphicon glyphicon-info-sign pull-right"></span> </a> </legend>
+
+	      <div class="form-group">	      
+		<label class="control-label" for="reassign-altids-task-form-inp-1">Options:</label>
+		<input id="reassign-altids-task-form-inp-1" class="form-control" type="text" name="task-form-args"  value="" size="80" placeholder="Command line arguments"/> 
+	      </div>
+
+              <input class="btn btn-primary my-task-form-submit"  type="submit" value="Run"/> 
+              <div class="my-task-form-status"></div>
+              <div class="my-task-form-links"></div>
+
+            </fieldset>
+          </form>
+	  -->
+
+          <!-- Isotropic B-value replacement form -->
+          <form id="biso-full-task-form" class="form-inline" role="form"> 
+            <fieldset>
+	      <legend>Isotropic B-value replacement <a href="wf-help.html"> <span class="glyphicon glyphicon-info-sign pull-right"></span> </a> </legend>
+
+	      <div class="form-group">	      
+		<label class="control-label" for="biso-full-task-form-inp-1">Options:</label>
+		<input id="biso-full-task-form-inp-1" class="form-control" type="text" name="task-form-args"  value="" size="80" placeholder="Command line arguments"/> 
+	      </div>
+
+              <input class="btn btn-primary my-task-form-submit"  type="submit" value="Run"/> 
+              <div class="my-task-form-status"></div>
+              <div class="my-task-form-links"></div>
+
+            </fieldset>
+          </form>
+
+          <!-- Merge replacement coordinates 
+          <form id="merge-xyz-task-form"  enctype="multipart/formdata" class="form-inline" role="form"> 
+            <fieldset>
+	      <legend>Merge Replacement Coordinates <a href="wf-help.html"> <span class="glyphicon glyphicon-info-sign pull-right"></span> </a> </legend>
+
+	      <div class="form-group">	      
+		<label class="control-label" for="merge-xyz-task-form-inp-1">Replacement coordinate file name</label>
+		<input id="merge-xyz-task-form-inp-1" class="form-control" type="file" name="file"  value="" size="60" /> 
+	      </div>
+
+	      <div class="form-group">	      
+		<label class="control-label" for="merge-xyz-task-form-inp-2">File format</label> 
+		<select id="merge-xyz-task-form-inp-2" class="form-control" name="xyzfileformat" columns="3">
+                  <option selected="selected"    value="cif">PDBx/mmCIF</option>
+                  <option                        value="pdb">PDB</option>
+		</select>
+	      </div>
+
+              <input class="btn btn-primary my-task-form-submit"  type="submit" value="Run"/> 
+              <div class="my-task-form-status"></div>
+              <div class="my-task-form-links"></div>
+
+            </fieldset>
+          </form>
+	  -->
+
+          <!-- Terminal atoms manipulation  -->
+          <form id="terminal-atoms-task-form" class="form-inline" role="form"> 
+            <fieldset>
+	      <legend>Replace Terminal Atoms <a href="wf-help.html"> <span class="glyphicon glyphicon-info-sign pull-right"></span> </a> </legend>
+
+	      <div class="form-group">	      
+		<label class="control-label" for="terminal-atoms-task-form-inp-1">Option</label> 
+		<select id="terminal-atoms-task-form-inp-1" class="form-control" name="terminalatomsoption" columns="3">
+                  <option selected="selected"    value="delete">delete</option>
+                  <option                        value="rename">rename</option>
+		</select>
+	      </div>
+
+              <input class="btn btn-primary my-task-form-submit"  type="submit" value="Run"/> 
+              <div class="my-task-form-status"></div>
+              <div class="my-task-form-links"></div>
+
+            </fieldset>
+          </form>
+
+          <form id="geom-valid-task-form" class="form-inline" role="form"> 
+            <fieldset>
+	      <legend>Update geometry and geometry diagnostics  <a href="wf-help.html"> <span class="glyphicon glyphicon-info-sign pull-right"></span> </a> </legend>
+
+	      <div class="form-group">	      
+		<label class="control-label" for="geom-valid-task-form-inp-1">Options:</label>
+		<input id="geom-valid-task-form-inp-1" class="form-control" type="text" name="task-form-args"  value="" size="80" placeholder="Command line arguments"/> 
+	      </div>
+
+              <input class="btn btn-primary my-task-form-submit"  type="submit" value="Run"/> 
+              <div class="my-task-form-status"></div>
+              <div class="my-task-form-links"></div>
+
+            </fieldset>
+          </form>
+
+          <form id="reflection-file-update-task-form" class="form-inline" role="form"> 
+            <fieldset>
+	      <legend>Update wavelength in reflection data file  <a href="wf-help.html"> <span class="glyphicon glyphicon-info-sign pull-right"></span> </a> </legend>
+
+	      <div class="form-group">	      
+		<label class="control-label" for="reflection-file-update-task-form-inp-1">Options:</label>
+		<input id="reflection-file-update-task-form-inp-1" class="form-control" type="text" name="task-form-args"  value="" size="80" placeholder="Command line arguments"/> 
+	      </div>
+
+              <input id="sf_submit_id" name="sf_submit_id" class="btn btn-primary my-task-form-submit"  type="submit" value="Run" /> 
+              <div class="my-task-form-status"></div>
+              <div class="my-task-form-links"></div>
+              <div id="wavelength_data_form"></div>
+
+            </fieldset>
+          </form>
+
+          <form id="mtz-mmcif-semi-auto-conversion-form" class="displaynone">
+            <fieldset>
+              <div id="mtz-mmcif-semi-auto-conversion-form-data"></div>
+              <center><input id="ignore-mtz-mmcif-semi-auto-conversion" type="button" value="IGNORE" /> &nbsp &nbsp &nbsp
+                      <input type="reset" value="RESET" /> &nbsp &nbsp &nbsp <input type="submit" value="SUBMIT" /></center>
+              <div class="my-task-form-status"></div>
+              <div class="my-task-form-links"></div>
+            </fieldset>
+          </form>
+
+          <!-- MTZ to mmCIF conversion form -->
+          <form id="mtz-mmcif-conversion-form" class="form-inline" role="form"> 
+            <fieldset>
+	      <legend>MTZ to mmCIF conversion <a href="wf-help.html"> <span class="glyphicon glyphicon-info-sign pull-right"></span> </a> </legend>
+
+              <div id="mtz_data_form"></div>
+	      <div class="form-group">	      
+		<label class="control-label" for="mtz-mmcif-conversion-form-inp-1">Upload File(s):</label> 
+		<select id="mtz-mmcif-conversion-form-inp-1" class="form-control" name="infile" columns="3">
+                  <option selected="selected"    value="not available">not available</option>
+		</select>
+	      </div>
+
+	      <div class="form-group">	      
+		<label class="control-label" for="mtz-mmcif-conversion-form-inp-2">Number of data sets in file:</label>
+		<input id="mtz-mmcif-conversion-form-inp-2" class="form-control" type="text" name="data_set"  value="1" size="1" /> 
+	      </div>
+
+              <input class="btn btn-primary my-task-form-submit"  type="submit" value="Run" disabled /> 
+              <div class="my-task-form-status"></div>
+              <div class="my-task-form-links"></div>
+
+            </fieldset>
+          </form>
+
+          <!-- Fix Special position  form -->
+          <form id="special-position-update-task-form" class="form-inline" role="form"> 
+            <fieldset>
+	      <legend>Update occupancy of waters on special positions<a href="wf-help.html"> <span class="glyphicon glyphicon-info-sign pull-right"></span> </a> </legend>
+
+	      <div class="form-group">	      
+		<label class="control-label" for="special-position-update-task-form-inp-1">Options:</label>
+		<input id="special-position-update-task-form-inp-1" class="form-control" type="text" name="task-form-args"  value="" size="80" placeholder="Command line arguments"/> 
+	      </div>
+
+              <input class="btn btn-primary my-task-form-submit"  type="submit" value="Run"/> 
+              <div class="my-task-form-status"></div>
+              <div class="my-task-form-links"></div>
+
+            </fieldset>
+          </form>
+
+          <!-- TLS range correction form -->
+          <form id="tls-range-correction-form" class="form-inline" role="form"> 
+            <fieldset>
+	      <legend>TLS range correction <a href="wf-help.html"> <span class="glyphicon glyphicon-info-sign pull-right"></span> </a> </legend>
+
+	      <div class="form-group">	      
+		<label class="control-label" for="tls-range-correction-form-inp-1">Upload File(s):</label> 
+		<select id="tls-range-correction-form-inp-1" class="form-control" name="tlsuploadfileoption" columns="3">
+                  <option selected="selected"    value="not available">not available</option>
+		</select>
+	      </div>
+
+              <input class="btn btn-primary my-task-form-submit"  type="submit" value="Run" disabled /> 
+              <div class="my-task-form-status"></div>
+              <div class="my-task-form-links"></div>
+
+            </fieldset>
+          </form>
+
+	</div> <!-- end of task dialog -->
+
+	<!-- progress spinner -->
+	<div id="loading">
+	  <div id="loadingcontent">
+	    <p id="loadingspinner">
+	      Running calculation ...
+	    </p>
+	  </div>
+	</div>
+
+
+      </div> <!-- End main page content container -->
+      
+    </div> <!-- end wrap -->
+    
+    <!--#include virtual="/ann_tasks_v2/includes/page_javascript_bs.html"-->
+    <!--#include virtual="/ann_tasks_v2/includes/page_footer_bs.html"-->
+  </body>
+</html>
+

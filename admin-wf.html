@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!--#include virtual="/ann_tasks_v2/includes/head_common_bs.html"-->
+    <title>Annotation Admin Tasks Module</title>
+  </head>
+  
+  <body>
+    <div id="wrap">
+      
+      <!-- Common page navigation -->
+      <!--#include virtual="/ann_tasks_v2/includes/page_header_admin_bs.html"-->
+      
+      
+      <div class="container">        <!-- Begin main page content container -->
+	<div class="page-header"> 
+	  <h3>Annotation Tasks  <small>Admin Tasks</small> 	    <small id="span_identifier" class="pull-right displaynone"> </small></h3>
+	</div>
+	
+	<div id="wf-admin-dialog" title="Workflow Administrative Upload Options">
+
+    <!-- Model file upload form -->
+    <br />
+    <form id="upload-wf-admin-model" class="form-inline" role="form"  enctype="multipart/formdata" action="/service/ann_tasks_v2/wfadmin_upload" method="post">
+      <fieldset>
+	<legend>Model file upload<a href="admin-wf-help.html"> <span class="glyphicon glyphicon-info-sign pull-right"></span> </a> </legend>
+
+	<div class="form-group">	    
+          <label for="model-file" class="label-control">File name</label>
+          <input class="formInputText form-control" type="file" id="model-file" name="file"  value="" size="60" />
+	</div>
+
+	<div class="form-group">	    
+          <label for="model-filetype" class="label-control">File type</label>
+          <select class="formSelect form-control" name="filetype" id="model-filetype">
+            <option selected="selected" value="model,pdbx,,model,pdbx,0">PDBx/mmCIF Model</option>
+            <option                     value="model,pdbx,rcsb-mmcif,model,pdbx,0">RCSB/mmCIF Model</option>
+            <option                     value="model,pdbx,rcsb-cifeps,model,pdbx,0">RCSB/CIFEPS Model</option>
+            <option                     value="model,pdbx,rcsb-mmcif-strip-plus-entity,model,pdbx,0">RCSB/mmCIF Model (strip entity_poly_seq/derived categories)</option>
+            <option                     value="model,pdbx,rcsb-cifeps-strip-plus-entity,model,pdbx,0">RCSB/CIFEPS Model (strip entity_poly_seq/derived categories)</option>
+          </select>
+	</div>
+	<input class="formInputButton btn btn-primary" type="submit" value="Go" />
+      </fieldset>
+      <input id="model-formid" name="formid" type="hidden" value="wf_admin_model_file_upload" />
+    </form>
+  </div>
+
+    <form id="upload-wf-admin-exp" class="form-inline" role="form" enctype="multipart/formdata" action="/service/ann_tasks_v2/wfadmin_upload" method="post">
+      <fieldset>
+	    <legend>Experimental data file upload <a href="admin-wf-help.html"> <span class="glyphicon glyphicon-info-sign pull-right"></span> </a> </legend>
+	    <div class="form-group">	    
+          <label for="exp-file" class="label-control">File name</label>
+          <input class="formInputText form-control" type="file" id="exp-file" name="file"  value="" size="60" />
+	    </div>
+        
+	    <div class="form-group">	    
+          <label for="exp-filetype" class="label-control">File type</label>
+          <select class="formSelect form-control" name="filetype" id="exp-filetype">
+            <option selected="selected" value="structure-factors,pdbx,mmcif-sf,structure-factors,pdbx,0">PDBx/mmCIF SF (gzipped)</option>
+          </select>
+	    </div>
+	    <input class="formInputButton btn btn-primary" type="submit" value="Go" />
+      </fieldset>
+      
+      <input id="exp-formid" name="formid" type="hidden" value="wf_admin_file_upload" />
+    </form>
+
+  <!-- New entry option form -->
+  <form id="new-entry-form" class="form-inline" role="form"> 
+           <fieldset>
+	     <legend>Add new entry<a href="admin-wf-help.html"> <span class="glyphicon glyphicon-info-sign pull-right"></span> </a> </legend>
+	     <div class="form-group">	    
+               <label for="new-dep-dataset-id" class="label-control">Data set identifier:</label>
+               <input id="new-dep-dataset-id" class="formInputText" type="text" name="datasetid"  value="" size="14" placeholder="D_XXXXXXXXXXX"/> 
+	     </div>
+
+	     <div class="form-group">	    
+               <label for="new-annotator" class="label-control">Annotator:</label>
+               <input id="new-annotator"      class="formInputText form-control" type="text" name="annotator"  value="" size="4" placeholder="AN"/> 
+	     </div>
+	     <div class="form-group">	    
+               <label for="new-purgeflag" class="label-control">&nbsp;&nbsp;Purge existing files:</label>
+               <input id="new-purgeflag" type="radio" name="purgeflag" value="Y">Y 
+	       <input type="radio" name="purgeflag" checked="yes" value="N">N
+             </div>
+
+             <input id="new-entry-button" class="formInputButton btn btn-primary" type="submit" value="Add" />
+             <div id="new-entry-status" class="op-status"></div>
+          </fieldset>
+  </form>
+
+  <!-- Reset entry workflow status/progress option form -->
+  <form id="reset-entry-form" class="form-inline" role="form"> 
+           <fieldset>
+	     <legend>Reset entry workflow status<a href="admin-wf-help.html"> <span class="glyphicon glyphicon-info-sign pull-right"></span> </a> </legend>
+	     <div class="form-group">	    
+               <label for="reset-dep-dataset-id" class="label-control">Data set identifier:</label>
+               <input id="reset-dep-dataset-id" class="formInputText form-control" type="text" name="datasetid"  value="" size="14" placeholder="D_XXXXXXXXXX"/> 
+	       </div>
+	     <div class="form-group">	    
+               <label for="reset-purgeflag" class="label-control">&nbsp;&nbsp;Purge model/sf to version 1:</label>
+               <input id="reset-purgeflag" type="radio" name="purgeflag" value="Y">Y 
+		 <input type="radio" name="purgeflag" checked="yes" value="N">N
+             </div>
+
+             <input id="reset-entry-button" class="formInputButton btn btn-primary" type="submit" value="Reset" />
+             <div id="reset-entry-status" class="op-status"></div>
+          </fieldset>
+  </form>
+
+  <!-- Entry annotator reassignment  -->
+  <form id="reassign-entry-form" class="form-inline" role="form"> 
+           <fieldset>
+	     <legend>Reassign annotator<a href="admin-wf-help.html"> <span class="glyphicon glyphicon-info-sign pull-right"></span> </a> </legend>
+
+	     <div class="form-group">	    
+               <label for="reassign-dep-dataset-id" class="label-control">Data set identifier:</label>
+               <input id="reassign-dep-dataset-id" class="formInputText form-control" type="text" name="datasetid"  value="" size="14" placeholder="D_XXXXXXXXXX"/> 
+	     </div>
+	     <div class="form-group">	    
+               <label for="reassign-annotator" class="label-control">New annotator:</label>
+               <input id="reassign-annotator"      class="formInputText form-control" type="text" name="annotator"  value="" size="4" placeholder="AN"/> 
+	     </div>	    
+
+             <input id="reassign-entry-button" class="formInputButton btn btn-primary" type="submit" value="Reset" />
+             <div id="reassign-entry-status" class="op-status"></div>
+          </fieldset>
+  </form>
+
+  <br/>
+
+  </div> <!-- end dialog -->
+
+  <div id="uploadProgress">
+    <h4>Upload status:</h4>
+    <div class="progress">
+      <div class="bar"></div >
+      <div class="percent">0%</div>
+    </div>
+    <div id="status"></div>
+  </div>
+
+
+
+    </div><!--  mainContent--> 
+</div> <!-- end wrap -->
+
+<!--#include virtual="/ann_tasks_v2/includes/page_footer_bs.html"-->
+<!--#include virtual="/ann_tasks_v2/includes/page_javascript_admin_bs.html"-->
+
+</body>
+</html>
+

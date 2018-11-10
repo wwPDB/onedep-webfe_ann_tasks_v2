@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!--#include virtual="/ann_tasks_v2/includes/head_common_bs.html"-->
+    <title>Annotation Tasks Module</title>
+  </head>
+  
+  <body>
+    <div id="wrap">
+      
+      <!-- Common page navigation -->
+      <!--#include virtual="/ann_tasks_v2/includes/page_header_bs.html"-->
+      
+      
+      <div class="container">        <!-- Begin main page content container -->
+	<div class="page-header"> 
+	  <h3>Annotation Tasks  <small>Help Information</small> 	    <small id="span_identifier" class="pull-right displaynone"> </small></h3>
+	</div>
+
+
+	<div class="row">
+
+	  <a id="upload" ></a>
+	  <h3>Model Upload</h3>
+	  <p>
+	    Provides upload option of model coordinate file.  Various flavors of PDBx/mmCIF format are supported.
+            Files with non-standard file names will be renamed by project conventions using the placeholder 
+            D_0000000000 data set identifier.      
+	  </p>
+	  <p>Dataset may also be identified by data set id code.   The latest files in the archive corresponding
+             to the identifier will be be downloaded.
+          </p>
+	  <hr />
+
+	  <a id="viewer" ></a>
+	  <h3>Viewer 3D</h3>
+	  <p>
+	    View input model coordinate data and map using the JMol Applet or JSMol.
+	  </p>
+	  <hr />
+
+	  <a id="assembly" ></a>
+	  <h3>Assembly Task</h3>
+	  <p>
+	    This task manages the calculation, display and selection of oligomeric assemblies calculated using the Pisa application.
+	    Details of the selected assemblies are merged into the coordinate model file using the <i>update option</i>.
+
+	    Pisa Reference - 
+
+	    E. Krissinel and K. Henrick (2007). Inference of macromolecular assemblies from crystalline state. J. Mol. Biol. 372, 774-797.
+
+	  </p>
+	  <pre>
+	    Additional Pisa command line options include:
+
+	    --lig-exclude='list' - exclude ligands in the given list when calculating the oligomeric state. The
+            list should be a comma-separated, no spaces,case-sensitive set of ligand names. 
+
+            The followin value as special meaning:
+
+            (all)    : exclude all ligands
+
+	    --lig=auto  - auto processing for ligands (default); ligands may be forcefully fixed on protein
+            surface subject to task complexity and data available
+
+	    --lig=fixed - fix ligands on protein surface
+
+	    --lig=free  - do not fix ligands on protein surface.
+
+	  </pre>
+	  <hr />
+
+
+	  <a id="other" ></a>
+	  <h3>Standard Annotation Tasks</h3>
+	  <p>
+	    Manage calculation of site, link, nucleic acid geometrical features, distant solvent and 
+	    secondary structure.
+	  </p>
+
+	  <h4>Link Calculation</h4>
+
+	  Calculation of links is performed using a module of the <a> href="http://sw-tools.pdb.org/apps/MAXIT/index.html">MAXIT program</a>.
+
+	  <pre>
+	    Link calculation command line options:   None at this time
+	  </pre>
+
+
+	  <h4>Solvent Position Calculation</h4>
+
+	  Calculation of solvent position is performed using the standard approach documented in the wwPDB data processing 
+	  guidelines. Solvent is repositioned in the model coordinate data file and distant waters are tabulated in a 
+	  validation category.
+
+	  <pre>
+	    Solvent calculation command line options:   None at this time
+	  </pre>
+
+	  <h4>Secondary Structure</h4>
+
+	  Secondary structure features are created using the algorithms originally implemented in 
+	  the PROMOTIF program.
+
+	  PROMOTIF Reference: E. G. Hutchinson & J. M. Thornton "PROMOTIF - A program to id entify structural motifs in proteins" Protein Science 5:212-220 (1996).
+
+	  <pre>
+	    An optional topology file may be used to 
+
+	    Example topology file:
+
+	    SHEET 1
+	    4 5 7
+	    1 9 3 8 5 6
+	    2 3 8 5 7
+	    SHEET 5
+	    4 5 7
+	    1 9 3 8 5 6
+	    2 3 8 5 7
+
+	  </pre>
+
+	  <h4>Site Environment</h4>
+
+	  The site enviroment is calculated using the <i>GETSITE</i> program developed by Kim Henrick.
+
+	  <pre>
+	    GETSITE optional command line options:
+
+	    option -c "A B C"               -> treat chains as a single het must have _struct_ref_seq 
+	    option -s                       -> use symmetry
+	    option -d                       -> debug
+	    option -m                       -> use SCALE records to get matrices
+	    option -e "res1 res2..."        -> ignore these RES codes
+	    option -b "res1 ..."            -> ignore LINK for these RES codes
+	    option -l " min_dist max_dist "
+	    option -n "Res1 Res2"           -> no connections between these residue pairs
+	    option -u "A n1 m1 B n2 m2"     -> linked residues 
+            doesnt use _struct_ref_seq ordered residues from n1 to m1
+            use a separate -u for each set
+	    option -r "A n1 A n2 B n3 ..." -> residue list each with
+            chain id and sequence number - insert code not handled
+            use a separate -r for each set
+	  </pre>
+	  <hr />
+
+
+	  <a id="edit" ></a>
+	  <h3>Edit/View</h3>
+	  <p>
+	    View and edit updated model file containing calculated annotations.
+	  </p>
+	  <hr />
+
+
+	  <a id="download" ></a>
+	  <h3>Download</h3>
+	  <p>
+	    Download copies of the updated model file containing calculated annotations, coordinates of any calculated
+	    assemblies, analysis file created by the Pisa program, site environment file from <i>getsite</i>, and the 
+	    log files from each of the annotation task calculations.
+
+	  </p>
+	  <hr />
+	  <br />
+	  <!-- END TEXT HERE  -->
+
+	</div>
+
+	<!-- progress spinner -->
+	<div id="loading">
+	  <div id="loadingcontent">
+	    <p id="loadingspinner"> Running calculation ...	</p>
+	  </div>
+	</div>
+
+
+      </div> <!-- End main page content container -->
+      
+    </div> <!-- end wrap -->
+    
+    <!--#include virtual="/ann_tasks_v2/includes/page_javascript_bs.html"-->
+    <!--#include virtual="/ann_tasks_v2/includes/page_footer_bs.html"-->
+  </body>
+</html>
+

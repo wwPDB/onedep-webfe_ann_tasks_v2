@@ -1,0 +1,8 @@
+@charset "utf-8";
+.clearfloat{clear:both; height:0; font-size:1px; line-height:0; overflow:hidden}
+.fltlft{float:left;margin-left:0.1%;margin-right:0.2%;padding-left:.1%;padding-right:.1%}
+.fltrgt{float:right;margin-left:0.2%;margin-right:0.1%;padding-left:.1%;padding-right:.1%}
+.msg_box{width:98%; height:350px; overflow:auto; border:#100719 1px solid; padding:0% 1% 0% 1%; margin:0% 1% 0% 1%;}
+.th_css_class{border-width:1px;border-spacing: 0px;margin: 0px;border-style:solid;border-color: #669966;text-align: center;font-size: 14px;}
+.td_css_class{border-width:1px;border-spacing: 0px;margin: 0px;border-style:solid;border-color: #669966;text-align: center;font-size: 14px;}
+.table_css_class{width : 98%;}

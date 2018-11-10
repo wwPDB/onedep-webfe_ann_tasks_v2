@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!--#include virtual="/ann_tasks_v2/includes/head_common_bs.html"-->
+    <title>Annotation Tasks Module</title>
+  </head>
+  
+  <body>
+    <div id="wrap">
+      
+      <!-- Common page navigation -->
+      <!--#include virtual="/ann_tasks_v2/includes/page_header_bs.html"-->
+      
+      
+      <div class="container">        <!-- Begin main page content container -->
+	<div class="page-header"> 
+	  <h3>Annotation Tasks  <small>Coordinate Editor</small> 	    <small id="span_identifier" class="pull-right displaynone"> </small></h3>
+	</div>
+	
+	
+	<!--  Coord editor section -->
+	<div id="coord-dialog" title="Coordinate Editor View">
+          <div><span id="coord-button-label"> </span></div>
+	</div>
+	<!-- progress spinner -->
+	<div id="loading">
+	  <div id="loadingcontent">
+            <p id="loadingspinner">
+              Running ...
+            </p>
+	  </div>
+	</div>
+	
+	<br/>
+	
+	<div class="panel-group" id="instruction">
+	  <div class="panel panel-default">
+	    <div class="panel-heading">
+	      <h4 class="panel-title">
+		<a data-toggle="collapse" data-parent="#instruction" href="#collapseOne">
+		  Instructions
+		</a>
+	      </h4>
+	    </div>
+	    <div id="collapseOne" class="panel-collapse collapse">
+	      <div class="panel-body">
+		<ul>
+		  <li>Coordinates are organized according to PDB chain IDs. For each PDB chain ID, it contains polymer chain,
+		    nonpolymer(s) and water (if they exist).</li>
+		  <li>For each atom, atom name, atom type, altLoc and occupancy fields can be edited by clicking the values in these two fields.
+		    Atom can be deleted by changing deletion flag from "N" to "Y".</li>
+		  <li>For each residue, number, insertion code and altLoc (applying to all atoms in the residue) fields can be edited.</li>
+		  <li>For nonpolymer and water residue, the PDB chain ID field can also be edited.</li>
+		  <li>"Renumbering Polymer/Nonpolymer/Water Starting from:" boxes are for global renumbering.</li>
+		  <li>For polymer chain, "Renumbering Polymer using Range:" box is for unusual numbering schema
+		    (Add instruction and example).</li>
+		  <li>"Rename PDB chain ID:" box is for renaming PDB chain ID (applying to all polymer, nonpolymer(s)
+		    and water (if they exist)).</li>
+		  <li>Update is done in the following order: atom level change, residue level change, global renumbering and renaming
+		    PDB chain ID.</li>
+		</ul>
+	      </div>
+	    </div>
+
+	  </div>
+	</div>
+      
+	<!-- Data Table -->
+	<div id="coord-table-container" class="row">                       
+	  <form id="coordEditorForm">
+	    <div class="form-group">
+	      <input class="btn btn-primary pull-right" id="coord-update-button" type = "submit" value = "Update" /><br />
+	    </div>
+            <div id="coord-content"></div>
+	  </form>
+	</div>
+	
+      </div> <!-- End main page content container -->
+      
+    </div> <!-- end wrap -->
+
+    <!--#include virtual="/ann_tasks_v2/includes/page_javascript_bs.html"-->
+    <!--#include virtual="/ann_tasks_v2/includes/page_footer_bs.html"-->
+  </body>
+</html>
+

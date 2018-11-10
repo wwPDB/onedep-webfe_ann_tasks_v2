@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!--#include virtual="/ann_tasks_v2/includes/head_common_bs.html"-->
+    <title>Annotation Tasks Module</title>
+  </head>
+  <body>
+    <div id="wrap">
+      <!--#include virtual="/ann_tasks_v2/includes/page_header_admin_bs.html"-->
+      
+      <div class="container">
+	<div class="page-header"> 
+	  <h3>Annotation Tasks  <small>Admin Options Help</small> 	    <small id="span_identifier" class="pull-right displaynone"> </small></h3>
+	</div>
+
+	
+	<div id="mainContent" class="row">
+
+	  <a id="upload" ></a>
+	  <h3>Model File Upload</h2>
+	  <p>
+	    Provides upload option of model coordinate file.  Format options RCSB-mmcif and RCSB-cifeps will be converted to PDBx-mmCIF 
+	    after upload.
+	  </p>
+	  <hr />
+
+	  <a id="upload" ></a>
+	  <h3>Experimental Data File Upload</h2>
+	  <p>
+	    Provides upload option of structure factor data file.  The only supported format is PDBx/mmCIF.
+	    Files can be uploaded in Gzip format.
+
+	  </p>
+	  <hr />
+
+	  <a id="new-entry" ></a>
+	  <h3>New Entry Option</h2>
+	  <p>
+	    Assign a deposition data set identifier and annoator for the entry to be added to the workflow system.
+	    Model and optionally structure factor data files must be uploaded before this option is visible.
+	    If the purge option is select the any existing archive data directory will be completely replaced
+	    by a new directory containing the uploaded model and structure factor data files. 
+	  </p>
+	  <hr />
+
+	  <a id="reset-entry" ></a>
+	  <h3>Reset Workflow Entry Status Option</h2>
+	  <p>
+	    Reset the workflow status/progress for an entry.  Enter the target deposition data set identifier for the entry to be reset.
+	    If the purge model files option is selected then all versions of the model/structure factor file beyond the first version
+	    will be removed.  The workflow status is reset to the begining of the pipeline.
+	  </p>
+	  <hr />
+
+	  <a id="reassign-entry" ></a>
+	  <h3>Reassign  Workflow Entry Annotator Option</h2>
+	  <p>
+	    Reassign the annotator responsible for the entry.  Enter the target deposition data set identifier and new annotator for the entry.
+	  </p>
+	  <hr />
+
+
+	  <br />
+	  <!-- END TEXT HERE  -->
+	</div>
+      </div>
+      
+    </div> <!-- end wrap -->
+    
+    <!--#include virtual="/ann_tasks_v2/includes/page_footer_bs.html"-->
+    <!--#include virtual="/ann_tasks_v2/includes/page_javascript_admin_bs.html"-->
+    
+  </body>
+</html>
