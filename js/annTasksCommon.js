@@ -69,6 +69,7 @@ var successFlag = 'false';
 var errorFlag = '';
 var errotText = '';
 var wfStatus='';
+var nmrAssemblyStatus='';
 var standaloneMode='';
 var pagePath ='';
 var entStatusCode='';
@@ -1122,6 +1123,10 @@ function appendContextToMenuUrls() {
             ret += (/\?/.test(ret) ? '&' : '?') + 'standalonemode=' + standaloneMode;
         }
 
+        if (nmrAssemblyStatus.length > 0) {
+            ret += (/\?/.test(ret) ? '&' : '?') + 'nmrassemblystatus=' + nmrAssemblyStatus;
+        }
+
         //console.log("index = " + index + " href " + href + " ret = " + ret);
 
         return ret;
@@ -1187,6 +1192,10 @@ function getCurrentContext() {
 
     if ("wfstatus" in params) {
         wfStatus = params.wfstatus;
+    }
+
+    if ("nmrassemblystatus" in params) {
+        nmrAssemblyStatus = params.nmrassemblystatus;
     }
 
     if ("standalonemode" in params) {
@@ -1762,6 +1771,20 @@ function processSemeAutoConvertForm(htmlText) {
        }
 }
 
+function getNmrAssemblyInfo() {
+       var html_text = "";
+
+       if (nmrAssemblyStatus == "existed") {
+            html_text = "Assembly information already existed in model file!";
+       } else if (nmrAssemblyStatus == "updated") {
+            html_text = "Successfully filled in assembly information!";
+       } else if (nmrAssemblyStatus == "failed") {
+            html_text = "Failed to automatically fill in assembly information!";
+       }
+
+       return html_text;
+}
+
 $('#ignore-mtz-mmcif-semi-auto-conversion').click(function() {
        processSemeAutoConvertForm('');
 });
@@ -1770,18 +1793,26 @@ $('#ignore-mtz-mmcif-semi-auto-conversion').click(function() {
 // Document ready entry point
 //
 $(document).ready(function () {
-    $("#uploadProgress").find('*').hide();
+    $("#uploadProgress").find("*").hide();
     $("#assembly-table-container").hide();
     getCurrentContext();
     //
     // Warn about out of workflow condition ---
     //
     if ($("#wf-startup-dialog").length > 0) {
-	if (wfStatus == 'completed') {
-	    $("#op-status").html("Workflow status update successful!");
-	} else if (wfStatus == 'failed'){
-	    $("#op-status").html("Workflow status update failed!   Proceed with caution!");
+        var html_text = "";
+	if (wfStatus == "completed") {
+            html_text = "Workflow status update successful!";
+	} else if (wfStatus == "failed"){
+            html_text = "Workflow status update failed!   Proceed with caution!";
 	}
+
+        var nmrAssemblyInfo = getNmrAssemblyInfo();
+        if (nmrAssemblyInfo != "") {
+             html_text += "<br/><br/>" + nmrAssemblyInfo;
+        }
+
+        $("#op-status").html(html_text);
     }
 
     //  Add session context to navbar menu items
@@ -1955,6 +1986,7 @@ $(document).ready(function () {
     if ($("#assembly-dialog").length > 0) {
 
         $('#assembly-update-button').hide();
+        $('#assembly-nmr-status').hide();
         $('#assembly-update-status').hide();
         $('#entity-info-container').hide();
         $('#symop-info-container').hide();
@@ -1963,6 +1995,11 @@ $(document).ready(function () {
 	    //$('#assembly-dep-info-button').show();
         $("#assembly-container-alt").hide();
         //$("#assembly-dep-info-container").hide();
+        var nmrAssemblyInfo = getNmrAssemblyInfo();
+        if (nmrAssemblyInfo != "") {
+             $('#assembly-nmr-status').html(nmrAssemblyInfo);
+             $('#assembly-nmr-status').show();
+        }
         $("#assembly-button-label").html(getDisplayButtonLabel());
         setOptionButtonVisible("#assembly-calc-button");
         <!-- assembly form -->
