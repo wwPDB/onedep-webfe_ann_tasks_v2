@@ -92,6 +92,7 @@ var fullTaskIdList = ['#solvent-task-form',
                       '#tls-range-correction-form',
                       '#mtz-mmcif-conversion-form',
                       '#sf-mmcif-free-r-correction-form',
+                      '#database-related-correction-form',
                       '#mtz-mmcif-semi-auto-conversion-form',
                       '#biso-full-task-form',
                       '#terminal-atoms-task-form',
@@ -128,6 +129,7 @@ var fullTaskDict  = {'#solvent-task-form'          : '/service/ann_tasks_v2/solv
                              '#tls-range-correction-form' : '/service/ann_tasks_v2/tlsrangecorrection',
                              '#mtz-mmcif-conversion-form' : '/service/ann_tasks_v2/mtz_mmcif_conversion',
                              '#sf-mmcif-free-r-correction-form' : '/service/ann_tasks_v2/correcting_sf_free_r_set',
+                             '#database-related-correction-form' : '/service/ann_tasks_v2/correcting_database_releated',
                              '#mtz-mmcif-semi-auto-conversion-form' : '/service/ann_tasks_v2/mtz_mmcif_conversion',
 		             '#biso-full-task-form'        : '/service/ann_tasks_v2/bisofullcalc',
 		             '#terminal-atoms-task-form'   : '/service/ann_tasks_v2/terminalatomscalc',
@@ -1381,6 +1383,11 @@ function updateFormLinkContent(jsonObj) {
 
 function taskFormCompletionOp(jsonObj, formId) {
     logContext("Completion processing for  >> " + formId);
+    if ( !(formId in jsonObj) ) {
+	logContext("ERROR formId not in returned object");
+	progressEnd();
+	return
+    }
     updateFormStatus(jsonObj[formId]);
     updateFormLinkContent(jsonObj[formId]);
     if ($(formId).length > 0) {
