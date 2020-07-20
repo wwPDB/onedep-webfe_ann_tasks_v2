@@ -1022,7 +1022,7 @@ function getComputedAssemblyDetails() {
             if (assemCount > 0) {
                 $('#assembly-html-container').html(jsonObj.tablecontent);
                 $('#assembly-html-container').show();
-		        setAssemblyViewCallback();
+		// setAssemblyViewCallback();
                 //getAssemblyTable(jsonObj.rowdata);
                 $('#assembly-update-button').show();
 
@@ -1265,61 +1265,10 @@ function setOptionButtonVisible(id) {
     }
 }
 
-function loadFileJmol(fileName, jmolMode) {
-    var setupCmds = '';
-    if (jmolMode == 'wireframe') setupCmds = "background black; wireframe only; wireframe 0.05; labels off; slab 100; depth 40; slab on;";
-    else {
-        setupCmds = "background black; wireframe only; wireframe 0.05; labels off; slab 100; depth 40; slab on;";
-    }
-    if ($('#jmolApplet0').size() > 0) {
-        var filePath = "/sessions/" + sessionId + "/" + fileName;
-        var jmolCmds = "load " + filePath + "; " + setupCmds;
-        document.jmolApplet0.script(jmolCmds);
-    }
-}
-function loadAssemblyJmol(assemblyId, jmolMode) {
-    // OBSOLETE CODE
-    var setupCmds = '';
-    if (jmolMode == 'wireframe') {
-		setupCmds = "background black; wireframe only; wireframe 0.05; labels off; slab 100; depth 40; slab on;";
-	} else {
-        setupCmds = "background black; wireframe only; wireframe 0.05; labels off; slab 100; depth 40; slab on;";
-    }
-    if ($('#jmolApplet0').size() > 0) {
-        var filePath = document.location.protocol + "//" + document.domain + "/sessions/" + sessionId + "/" + entryId + "-assembly-model-" + assemblyId + ".cif";
-        var jmolCmds = "load " + filePath + "; " + setupCmds;
-        document.jmolApplet0.script(jmolCmds);
-    }
-}
-function setAssemblyViewCallback() {
-    // make assembly view links ajax
-    $('.assem_viewable').click(function () {
-        var serviceUrl = $(this).attr('href');
-        logContext("++++++++ Using  assembly service url " + serviceUrl);
-        var serviceData = getServiceContext();
-        $.ajax({
-            url: serviceUrl,
-            data: serviceData,
-            dataType: 'json',
-            success: function (jsonOBJ) {
-                logContext("Launching new Jmol applet");
-                $('#jmol-dialog-assem').html(jsonOBJ.htmlcontent).dialog({
-                    bgiframe: true,
-                    autoOpen: true,
-                    modal: false,
-                    height: 700,
-                    width: 700,
-                    close: function (event, ui) {
-			$("#jmol-dialog-assem").empty();
-                    }
-                });
-		//jdw
-		$('.ui-dialog-titlebar-close').removeClass("ui-dialog-titlebar-close").html('<span>X</span>');
-            }
-        });
-        return false;
-    });
-}
+//function setAssemblyViewCallback() {
+    // make assembly view links ajax - jmol removed - but this might be useful in future
+//    
+//}
 
 // Callback from the editor javascript code
 function hideEditFrame() {
@@ -1908,79 +1857,8 @@ $(document).ready(function () {
 
 
 	// Jmol options
-
-	setOptionButtonVisible("#jmol-opener-button");
         $("#display-button-label").html(getDisplayButtonLabel());
-        $('#jmol-opener-button').click(function () {
-            if ($('#jmolApplet0').size() == 0) {
-                var serviceData = getServiceContext();
-                $.ajax({
-                    url: jmolLaunchServiceUrl,
-                    data: serviceData,
-                    dataType: 'json',
-                    success: function (jsonOBJ) {
-                        logContext("Launching new Jmol applet");
-                        $('#jmol-dialog').html(jsonOBJ.htmlcontent).dialog({
-                            bgiframe: true,
-                            autoOpen: true,
-                            modal: false,
-                            height: 700,
-                            width: 700,
-                            close: function (event, ui) {
-                                $("#jmol-dialog").attr("disabled", false);
-                                //$("#jmol-dialog").empty();
-                                $('#jmol-opener-button').attr("disabled", false);
-                            }
-                        });
-                        $('#jmol-opener-button').attr("disabled", true);
-			//jdw
-			$('.ui-dialog-titlebar-close').removeClass("ui-dialog-titlebar-close").html('<span>X</span>');
-                    }
-                });
 
-            } else {
-                logContext("Loading existing Jmol applet with file " + entryFileName);
-                $("#jmol-dialog").dialog('open');
-		//jdw
-		$('.ui-dialog-titlebar-close').removeClass("ui-dialog-titlebar-close").html('<span>X</span>');
-                loadFileJmol(entryFileName, 'wireframe');
-                $('#jmol-opener-button').attr("disabled", true);
-            }
-        });
-
-        $('#jmol-with-map-opener-button').click(function () {
-            var serviceData = getServiceContext();
-            $.ajax({
-                url: jmolWithMapLaunchServiceUrl,
-                data: serviceData,
-                dataType: 'json',
-                success: function (jsonOBJ) {
-                    logContext("Launching new Jmol applet with map content");
-                    $('#jmol-dialog').html(jsonOBJ.htmlcontent).dialog({
-                        bgiframe: true,
-                        autoOpen: true,
-                        modal: false,
-                        height: 700,
-                        width: 700,
-                        close: function (event, ui) {
-                            $("#jmol-dialog").attr("disabled", false);
-                            $('#jmol-with-map-opener-button').attr("disabled", false);
-                        }
-                    });
-                    $('#jmol-with-map-opener-button').attr("disabled", true);
-		    //jdw
-		    $('.ui-dialog-titlebar-close').removeClass("ui-dialog-titlebar-close").html('<span>X</span>');
-                }
-            });
-        });
-
-	logContext("mapFlag in jmol with map button sect " + mapFlag);
-	if (mapFlag) {
-            $('#jmol-with-map-opener-button').show();
-	} else {
-	    logContext("Hiding jmol with map button");
-            $('#jmol-with-map-opener-button').hide();
-	}
     }
     //<!-- Assembly operations -->
     if ($("#assembly-dialog").length > 0) {
@@ -2020,7 +1898,7 @@ $(document).ready(function () {
                 if (assemCount > 0) {
                     $('#assembly-html-container').html(jsonObj.tablecontent);
                     $('#assembly-html-container').show();
-		            setAssemblyViewCallback();
+		     // setAssemblyViewCallback();
                     //getAssemblyTable(jsonObj.rowdata);
                     $('#assembly-update-button').show();
                 } else {
@@ -2100,7 +1978,7 @@ $(document).ready(function () {
                     logContext("testing gen table");
                     if (jsonObj.assemgentable) {
                         $("#assembly-gen-container").html(jsonObj.assemgentable);
-                        setAssemblyViewCallback();
+                        // setAssemblyViewCallback();
                     }
                 }
             });
