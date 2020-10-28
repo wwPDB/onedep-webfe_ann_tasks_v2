@@ -249,9 +249,9 @@ function getDownloadExpFileLabel() {
     }
     return fn;
 }
-function display_mol_star(molecule_url){
+function display_mol_star(molecule_url, assemblyId){
     var viewerInstance = new PDBeMolstarPlugin();
-    var options = {customData: {url: molecule_url, format: 'cif'}, landscape: true};
+    var options = {customData: {url: molecule_url, format: 'cif'}, landscape: true, assemblyId: assemblyId};
     //Get element from HTML/Template to place the viewer
     var viewerContainer = document.getElementById('myViewer');
     //Call render method to display the 3D view
@@ -260,7 +260,7 @@ function display_mol_star(molecule_url){
 
 function display_mol_star_model(){
     var filePath = "/sessions/" + sessionId + "/" + entryFileName;
-    display_mol_star(molecule_url=filePath)
+    display_mol_star(molecule_url=filePath, assemblyId='1')
 
 }
 
