@@ -1735,6 +1735,61 @@ function select_entry(formid, tagid) {
        }
 }
 
+function select_close_contact(tagid, type) {
+       var selected_val = 'Select All';
+       if (type != '') selected_val = 'Select All ' + type;
+       var unselected_val = 'Unselect All';
+       if (type != '') unselected_val = 'Unselect All ' + type;
+
+       var request = $('#' + tagid).attr('value');
+       $('#update-close-contact-form').find("input[name^='close_contact_']:checkbox").each(function() {
+            if (type != '') { 
+                 if ($(this).hasClass(type)) {
+                      if (request == selected_val)
+                           $(this).prop('checked', true);
+                      else $(this).prop('checked', false);
+                 }
+            } else {
+                 if (request == selected_val)
+                      $(this).prop('checked', true);
+                 else $(this).prop('checked', false);
+            }
+       });
+       if (request == selected_val) {
+            $('#' + tagid).attr('value', unselected_val);
+            if ((tagid == 'close_contact_select_all') && ($('#close_contact_select_all_green').length > 0)) {
+                 $('#close_contact_select_all_green').attr('value', 'Unselect All green');
+            }
+       } else {
+            $('#' + tagid).attr('value', selected_val);
+            if ((tagid == 'close_contact_select_all') && ($('#close_contact_select_all_green').length > 0)) {
+                 $('#close_contact_select_all_green').attr('value', 'Select All green');
+            }
+       }
+}
+
+function validate_close_contact_form($form) {
+       var selected_count = 0;
+       $form.find('input[name^="close_contact_"]:checkbox').each(function() {
+            if ($(this).is(':checked')) selected_count += 1;
+       });
+       if (selected_count == 0) {
+            alert("No record selected");
+            return false;
+       }
+
+       return true;
+}
+
+function exit_close_contact_page() {
+       $('#update-close-contact-form-data').html('');
+       $('#review-close-contact-page').hide();
+       $('#mapcalc-task-form, #npcc-mapcalc-task-form, #trans-coord-task-form, #special-position-task-form, #biso-full-task-form').show();
+       $('#terminal-atoms-task-form, #geom-valid-task-form, #reflection-file-update-task-form, #mtz-mmcif-semi-auto-conversion-form').show();
+       $('#mtz-mmcif-conversion-form, #sf-mmcif-free-r-correction-form, #special-position-update-task-form, #tls-range-correction-form').show();
+       $('#database-related-correction-form, #review-close-contact-form').show();
+}
+
 function processSemeAutoConvertForm(htmlText) {
        var currentTaskIdList = [];
        for (var i = 0; i < fullTaskIdList.length; i++) {
@@ -2241,6 +2296,73 @@ $(document).ready(function () {
                                     }
                             });
                 }
+
+            $('#review-close-contact-button').click(function () {
+                 var serviceData = getServiceContext();
+                 $.ajax({
+                     url: '/service/ann_tasks_v2/get_close_contact_content',
+                     data: serviceData,
+                     dataType: 'json',
+                     beforeSend: function() {
+                         progressStart();
+                     },
+                     success: function (jsonObj) {
+                         progressEnd();
+                         if (("htmlcontent" in jsonObj) && (jsonObj.htmlcontent.length > 0)) {
+                             $('#mapcalc-task-form, #npcc-mapcalc-task-form, #trans-coord-task-form, #special-position-task-form, #biso-full-task-form').hide();
+                             $('#terminal-atoms-task-form, #geom-valid-task-form, #reflection-file-update-task-form, #mtz-mmcif-semi-auto-conversion-form').hide();
+                             $('#mtz-mmcif-conversion-form, #sf-mmcif-free-r-correction-form, #special-position-update-task-form, #tls-range-correction-form').hide();
+                             $('#database-related-correction-form, #review-close-contact-form').hide();
+                             $('#update-close-contact-form-data').html(jsonObj.htmlcontent);
+                             $('#review-close-contact-page').show();
+                         } else {
+                              $('#review-close-contact-form fieldset div.my-task-form-status').html("No close contact found.");
+                              $('#review-close-contact-form fieldset div.my-task-form-status').show();
+                         }
+                     },
+                     error: function (data, status, e) {
+                         progressEnd();
+                         alert(e);
+                         return false;
+                     }
+                 });
+            });
+
+            $('#update-close-contact-form').ajaxForm({
+                url: '/service/ann_tasks_v2/update_close_contact_content',
+                dataType: 'json',
+                beforeSubmit: function (arr, $form, options) {
+                    if (!validate_close_contact_form($form)) return false;
+                    progressStart();
+                    arr.push({
+                        "name": "sessionid",
+                        "value": sessionId
+                    });
+                    arr.push({
+                        "name": "entryid",
+                        "value": entryId
+                    });
+                    arr.push({
+                        "name": "entryfilename",
+                        "value": entryFileName
+                    });
+                },
+                success: function (jsonObj) {
+                    progressEnd();
+                    if (jsonObj.errorflag) {
+                         alert(jsonObj.errortext);
+                    } else {
+                         taskFormCompletionOp(jsonObj, "#review-close-contact-form");
+                         exit_close_contact_page();
+                    }
+                    return false;
+                },
+                error: function (data, status, e) {
+                    progressEnd();
+                    alert(e);
+                    return false;
+                }
+            });
         } else {
             $("#task-dialog").hide();
             $("#task-alt-dialog").html("No file uploaded");
