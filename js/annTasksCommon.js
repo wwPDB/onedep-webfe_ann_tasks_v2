@@ -249,19 +249,24 @@ function getDownloadExpFileLabel() {
     }
     return fn;
 }
-function display_mol_star(molecule_url, assemblyId){
-    var viewerInstance = new PDBeMolstarPlugin();
-    var options = {customData: {url: molecule_url, format: 'cif'}, landscape: true, assemblyId: assemblyId};
-    //Get element from HTML/Template to place the viewer
-    var viewerContainer = document.getElementById('myViewer');
-    //Call render method to display the 3D view
-    viewerInstance.render(viewerContainer, options);
-}
 
-function display_mol_star_model(){
-    var filePath = "/sessions/" + sessionId + "/" + entryFileName;
-    display_mol_star(molecule_url=filePath, assemblyId='1')
+function display_mol_star(molecule_url){
+    var viewerInstance = new molstar.Viewer('myViewer', {
+                extensions: [],
+                layoutIsExpanded: false,
+                layoutShowControls: true,
+                layoutShowRemoteState: false,
+                layoutShowSequence: true,
+                layoutShowLog: false,
+                layoutShowLeftPanel: false,
 
+                viewportShowExpand: false,
+                viewportShowSelectionMode: false,
+                viewportShowAnimation: false,
+                volumeStreamingDisabled: true
+
+            });
+    viewerInstance.loadAllModelsOrAssemblyFromUrl(molecule_url, 'mmcif', false, { representationParams: { theme: { globalName: 'operator-name' } } });
 }
 
 function uploadFile(serviceUrl, formElementId, progressElementId) {
