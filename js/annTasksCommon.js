@@ -203,12 +203,25 @@ String.prototype.startsWith = function (str){
 	return this.indexOf(str) == 0;
 };
 
-function setDownloadModelFileUrl(id) {
+function getModelFileUrl() {
     var url;
     var fn;
     if (entryFileName.length > 0) {
         fn = entryFileName;
         url = "/sessions/" + sessionId + "/" + fn;
+    } else {
+        url = "#";
+        fn = "";
+    }
+    return url
+}
+
+function setDownloadModelFileUrl(id) {
+    var url;
+    var fn;
+    if (entryFileName.length > 0) {
+        fn = entryFileName;
+        url = getModelFileUrl()
     } else {
         url = "#";
         fn = "";
@@ -270,8 +283,7 @@ function display_mol_star(molecule_url){
 }
 
 function show_model_in_mol_star(){
-    var filePath = "/sessions/" + sessionId + "/" + entryFileName
-    display_mol_star(molecule_url=filePath)
+    display_mol_star(getModelFileUrl())
 }
 
 function uploadFile(serviceUrl, formElementId, progressElementId) {
