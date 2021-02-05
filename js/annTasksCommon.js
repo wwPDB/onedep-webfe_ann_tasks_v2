@@ -269,6 +269,11 @@ function display_mol_star(molecule_url){
     viewerInstance.loadAllModelsOrAssemblyFromUrl(molecule_url, 'mmcif', false, { representationParams: { theme: { globalName: 'operator-name' } } });
 }
 
+function show_model_in_mol_star(){
+    var filePath = "/sessions/" + sessionId + "/" + entryFileName
+    display_mol_star(molecule_url=filePath)
+}
+
 function uploadFile(serviceUrl, formElementId, progressElementId) {
     // Upload model of sf file -
     var bar = $('.bar');
@@ -1979,6 +1984,9 @@ $(document).ready(function () {
         }
         $("#assembly-button-label").html(getDisplayButtonLabel());
         setOptionButtonVisible("#assembly-calc-button");
+        $('#download-model-url').hide();
+        $("#download-model-url-label").html(getDownloadModelFileLabel());
+        setDownloadModelFileUrl("#download-model-url");
         <!-- assembly form -->
         $('#assemblyForm div.op-status').hide();
 

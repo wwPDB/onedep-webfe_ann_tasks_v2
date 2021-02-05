@@ -5,7 +5,16 @@
     <title>Annotation Tasks Module</title>
 </head>
 
+<style>
+        #myViewer {
+            width: 800px;
+            height: 600px;
+            position: relative;
+        }
+</style>
+
 <body>
+<!-- <body onLoad="show_model_in_mol_star()"></body> -->
     <div id="wrap">
 
         <!-- Common page navigation -->
@@ -27,6 +36,7 @@
                 <div>
                     <span id="assembly-button-label"> </span> &nbsp;&nbsp;
                     &nbsp;&nbsp;<span id="assembly-nmr-status"></span> &nbsp;&nbsp;
+                    <span id="download-model-url"> </span>
                     <button class="btn btn-primary" id="assembly-update-button">Update assemblies</button>
                     &nbsp;&nbsp;<span id="assembly-update-status" class="op-status"></span>
                 </div>
@@ -65,6 +75,7 @@
             </form>
             <br />
             <!-- Container for table of generated assemblies -->
+            <!-- <div id="myViewer">show_model_in_mol_star()</div> -->
             <div id="assembly-gen-container"> </div>
             <br/>
             <div>
