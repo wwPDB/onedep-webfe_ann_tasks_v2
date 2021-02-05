@@ -5,7 +5,15 @@
     <title>Annotation Tasks Module</title>
   </head>
 
-  <body>
+  <style>
+        #myViewer {
+            width: 1000px;
+            height: 800px;
+            position: relative;
+        }
+    </style>
+
+  <body onLoad="display_mol_star_model()">
   <!-- <body onLoad="display_mol_star_model()"> -->
 
     <div id="wrap">
@@ -35,6 +43,8 @@
 	<!--  JMol section jmol-dialog inits jsmol too -->
 	<div id="jmol-dialog" title="JMol View">    </div>
 	<div id="jsmol-dialog-1" title="JSmol View"> </div>
+
+    <div id="myViewer">display_mol_star_model()</div>
 
 
       </div> <!-- End main page content container -->
