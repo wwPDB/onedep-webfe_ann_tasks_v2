@@ -69,7 +69,7 @@ var successFlag = 'false';
 var errorFlag = '';
 var errotText = '';
 var wfStatus='';
-var nmrAssemblyStatus='';
+var AssemblyStatus='';
 var standaloneMode='';
 var pagePath ='';
 var entStatusCode='';
@@ -1179,8 +1179,8 @@ function appendContextToMenuUrls() {
             ret += (/\?/.test(ret) ? '&' : '?') + 'standalonemode=' + standaloneMode;
         }
 
-        if (nmrAssemblyStatus.length > 0) {
-            ret += (/\?/.test(ret) ? '&' : '?') + 'nmrassemblystatus=' + nmrAssemblyStatus;
+        if (AssemblyStatus.length > 0) {
+            ret += (/\?/.test(ret) ? '&' : '?') + 'assemblystatus=' + AssemblyStatus;
         }
 
         //console.log("index = " + index + " href " + href + " ret = " + ret);
@@ -1250,8 +1250,8 @@ function getCurrentContext() {
         wfStatus = params.wfstatus;
     }
 
-    if ("nmrassemblystatus" in params) {
-        nmrAssemblyStatus = params.nmrassemblystatus;
+    if ("assemblystatus" in params) {
+        AssemblyStatus = params.assemblystatus;
     }
 
     if ("standalonemode" in params) {
@@ -1836,14 +1836,14 @@ function processSemeAutoConvertForm(htmlText) {
        }
 }
 
-function getNmrAssemblyInfo() {
+function getAssemblyInfo() {
        var html_text = "";
 
-       if (nmrAssemblyStatus == "existed") {
-            html_text = "Assembly information already existed in model file!";
-       } else if (nmrAssemblyStatus == "updated") {
-            html_text = "Successfully filled in assembly information!";
-       } else if (nmrAssemblyStatus == "failed") {
+       if (AssemblyStatus == "existed") {
+            html_text = "Assembly information already present in model file!";
+       } else if (AssemblyStatus == "updated") {
+            html_text = "Successfully filled in unit assembly information!";
+       } else if (AssemblyStatus == "failed") {
             html_text = "Failed to automatically fill in assembly information!";
        }
 
@@ -1872,9 +1872,9 @@ $(document).ready(function () {
             html_text = "Workflow status update failed!   Proceed with caution!";
 	}
 
-        var nmrAssemblyInfo = getNmrAssemblyInfo();
-        if (nmrAssemblyInfo != "") {
-             html_text += "<br/><br/>" + nmrAssemblyInfo;
+        var AssemblyInfo = getAssemblyInfo();
+        if (AssemblyInfo != "") {
+             html_text += "<br/><br/><strong>" + AssemblyInfo + "</strong>";
         }
 
         $("#op-status").html(html_text);
@@ -1980,7 +1980,7 @@ $(document).ready(function () {
     if ($("#assembly-dialog").length > 0) {
 
         $('#assembly-update-button').hide();
-        $('#assembly-nmr-status').hide();
+        $('#assembly-status').hide();
         $('#assembly-update-status').hide();
         $('#entity-info-container').hide();
         $('#symop-info-container').hide();
@@ -1989,10 +1989,10 @@ $(document).ready(function () {
 	    //$('#assembly-dep-info-button').show();
         $("#assembly-container-alt").hide();
         //$("#assembly-dep-info-container").hide();
-        var nmrAssemblyInfo = getNmrAssemblyInfo();
-        if (nmrAssemblyInfo != "") {
-             $('#assembly-nmr-status').html(nmrAssemblyInfo);
-             $('#assembly-nmr-status').show();
+        var AssemblyInfo = getAssemblyInfo();
+        if (AssemblyInfo != "") {
+             $('#assembly-status').html(AssemblyInfo);
+             $('#assembly-status').show();
         }
         $("#assembly-button-label").html(getDisplayButtonLabel());
         setOptionButtonVisible("#assembly-calc-button");
