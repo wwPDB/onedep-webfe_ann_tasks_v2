@@ -56,6 +56,7 @@
  * 13-Jan-2017     ep     add special-position-update-task-form support
  * 19-Feb-2017     ep     add opening of editor module on page load
  * 04-Oct-2017     zf     add getEntityInfoDetails(), getSymopInfoDetails(), getAsuJsmolLink() & select_entry()
+ * 07-Jul-2021     zf     removed 'site-task-form', added set_all_monomers() & $('#add_row_button').click(function() {});
  */
 //
 // Globals -
@@ -79,7 +80,7 @@ var fullTaskIdList = ['#solvent-task-form',
                       '#link-task-form',
                       '#secstruct-task-form',
                       '#nafeature-task-form',
-                      '#site-task-form',
+                      // '#site-task-form',
 		              '#extracheck-task-form',
                       '#valreport-task-form',
                       '#mapcalc-task-form',
@@ -115,7 +116,7 @@ var fullTaskDict  = {'#solvent-task-form'          : '/service/ann_tasks_v2/solv
 		             '#link-task-form'             : '/service/ann_tasks_v2/linkcalc',
 		             '#secstruct-task-form'        : '/service/ann_tasks_v2/secstructcalc',
 		             '#nafeature-task-form'        : '/service/ann_tasks_v2/naFeaturescalc',
-		             '#site-task-form'             : '/service/ann_tasks_v2/sitecalc',
+		             // '#site-task-form'             : '/service/ann_tasks_v2/sitecalc',
 		             '#dict-check-task-form'       : '/service/ann_tasks_v2/dictcheck',
 		             '#extracheck-task-form'       : '/service/ann_tasks_v2/extracheck',
 		             '#valreport-task-form'        : '/service/ann_tasks_v2/valreport',
@@ -957,6 +958,92 @@ function activateAssemblyInputButton() {
 			            }
 		            }
 		        });
+                        $('#add_row_button').click(function() {
+                            var selectvalues = '[{"value":"author_defined_assembly","label":"author_defined_assembly","selected":true},'
+                                             + '{"value":"software_defined_assembly","label":"software_defined_assembly","selected":false},'
+                                             + '{"value":"author_and_software_defined_assembly","label":"author_and_software_defined_assembly","selected":false}]';
+                            var formlength = parseInt($('#formlength').val());
+                            var instanceidlist = $('#polyinstanceidlist').val().split(',');
+                            var linearbranchinfo = $('#linearbranchmap').val();
+                            var linearbranchmap = {};
+                            if (linearbranchinfo != "") {
+                                 tmp_list = linearbranchinfo.split(';');
+                                 for (var i = 0; i < tmp_list.length; ++i) {
+                                      var key_valist = tmp_list[i].split(':');
+                                      linearbranchmap[key_valist[0]] = key_valist[1].split(',');
+                                 }
+                            }
+                            
+                            var additional_row_text = "";
+                            var tagIdList = [];
+                            for (var i = 0; i < 5; ++i) {
+                                 formlength++;
+                                 var assemId = formlength.toString();
+                                 additional_row_text += '<tr><td><input type="hidden" name="a_id_' + assemId + '" value="' + assemId + '" />' + assemId + '</td>';
+                                 additional_row_text += '<td><span id="a_prov_' + assemId + '" data-ief-edittype="select" data-ief-selectvalues=\''
+                                                      + selectvalues + '\'>author_defined_assembly</span>';
+                                 additional_row_text += '<td><span  id="a_ba_' + assemId + '">click-to-edit</span></td>';
+                                 additional_row_text += '<td><span  id="a_sa_' + assemId + '">click-to-edit</span></td>';
+                                 additional_row_text += '<td><span  id="a_fe_' + assemId + '">click-to-edit</span></td>';
+                                 additional_row_text += '<td><span  id="a_oc_' + assemId + '">click-to-edit</span></td>';
+                                 additional_row_text += '<td class="textleft">';
+                                 tagIdList.push('a_prov_' + assemId);
+                                 tagIdList.push('a_ba_' + assemId);
+                                 tagIdList.push('a_sa_' + assemId);
+                                 tagIdList.push('a_fe_' + assemId);
+                                 tagIdList.push('a_oc_' + assemId);
+                                 for (var j = 0; j < instanceidlist.length; ++j) {
+                                      additional_row_text += ' ' + instanceidlist[j] + ' <input name="a_' + assemId + '_inst_' + instanceidlist[j] + '" type="checkbox" />';
+                                      additional_row_text += ' OP <span id="a_' + assemId + '_symop_' + instanceidlist[j] + '">1_555</span> <br/>';
+                                      tagIdList.push('a_' + assemId + '_symop_' + instanceidlist[j]);
+                                      if (instanceidlist[j] in linearbranchmap) {
+                                           var includeBranchList = [];
+                                           for (var k = 0; k < linearbranchmap[instanceidlist[j]].length; ++k) {
+                                                var instId = linearbranchmap[instanceidlist[j]][k];
+                                                includeBranchList.push(' ' + instId + '  <input name="a_' + assemId + '_inst_' + instId +
+                                                      '" type="checkbox" />  OP <span  id="a_' + assemId + '_symop_' + instId + '">1_555</span>');
+                                                tagIdList.push('a_' + assemId + '_symop_' + instId);
+                                           }
+                                           for (var k = 0; k < includeBranchList.length; ++k) {
+                                                if (k == 0) additional_row_text += '( ';
+                                                additional_row_text += includeBranchList[k];
+                                                if (k == (includeBranchList.length - 1)) additional_row_text += ' )';
+                                                additional_row_text += ' <br/>';
+                                           }
+                                      }
+                                 }
+                                 additional_row_text += '</td></tr>'
+                            }
+                            $('#assembly_input_table').append(additional_row_text);
+
+                            for (var i = 0; i < tagIdList.length; ++i) {
+                                 $('#' + tagIdList[i]).addClass('ief');
+                                 if (tagIdList[i].indexOf("_symop_") == -1) $('#' + tagIdList[i]).addClass('greyedout');
+                                 $('#' + tagIdList[i]).ief({
+                                     onstart:function(){
+                                            if ($(this).hasClass('greyedout')){
+                                                $(this).attr('placeholder',$(this).html()).empty();
+                                            }
+                                     },
+                                     oncommit:function(){
+                                            if ($(this).hasClass('greyedout') && !$(this).is(":empty")){
+                                                $(this).removeClass('greyedout');
+                                            } else if ($(this).hasClass('greyedout')) {
+                                                $(this).html(placeholder).addClass('greyedout');
+                                            } else if ($(this).is(":empty")) {
+                                                $(this).html(placeholder).addClass('greyedout');
+                                            }
+                                     },
+                                     oncancel:function(){
+                                            if ($(this).is(":empty")){
+                                                $(this).html(placeholder).addClass('greyedout');
+                                            }
+                                     }
+                                 });
+                            }
+                            $('#assembly_input_table').show();
+                            $('#formlength').val(formlength.toString());
+                        });
 		        $('.assembly_ajaxform').ajaxForm({
 		            beforeSubmit: function (formData, jqForm, options) {
 			            formData.push({name:'sessionid',value:sessionId});
@@ -1754,6 +1841,21 @@ function select_entry(formid, tagid) {
             $('#' + tagid).attr('value', 'Unselect All');
        } else {
             $('#' + tagid).attr('value', 'Select All');
+       }
+}
+
+function set_all_monomers(formid, tagid, instIdsText) {
+       var instIdList = instIdsText.split(',');
+       var request = $('#' + tagid).attr('value');
+       for (var i = 0; i < instIdList.length; ++i) {
+            if (request == 'All Monomers')
+                 $('#' + formid + ' #' + instIdList[i]).prop('checked', true);
+            else $('#' + formid + ' #' + instIdList[i]).prop('checked', false);
+       }
+       if (request == 'All Monomers') {
+            $('#' + tagid).attr('value', 'Unset All Monomers');
+       } else {
+            $('#' + tagid).attr('value', 'All Monomers');
        }
 }
 
