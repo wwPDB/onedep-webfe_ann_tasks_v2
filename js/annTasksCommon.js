@@ -163,6 +163,7 @@ var assemblySelectServiceUrl = '/service/ann_tasks_v2/assemblyselect';
 
 var assemblyLoadFormServiceUrl = '/service/ann_tasks_v2/assemblyloadform';
 var assemblySaveFormServiceUrl = '/service/ann_tasks_v2/assemblysaveform';
+var assemblySaveDefaultServiceUrl = '/service/ann_tasks_v2/assemblysavedefaultinfo';
 
 var assemblyLoadDepInfoServiceUrl = '/service/ann_tasks_v2/assemblyloaddepinfo';
 var depInfoDisplayFlag = 'false';
@@ -916,6 +917,28 @@ function getLocalMapInfo() {
     return retObj;
 }
 
+function callAssemblySaveDefaultService(serviceData) {
+    $.ajax({ url: assemblySaveDefaultServiceUrl, data: serviceData, dataType: 'json',
+          beforeSend: function() {
+                 progressStart();
+          },
+          success: function (jsonOBJ) {
+                  logContext("Completed assembly update " + jsonOBJ);
+                  if (jsonOBJ.errorflag) {
+                        $("#assembly-update-status").html(jsonOBJ.statustext);
+                        $('#assembly-update-status').addClass('error-status');
+                  } else {
+                        $("#assembly-update-status").html(jsonOBJ.htmlcontent);
+                        $('#assembly-update-status').removeClass('error-status');
+                        if (jsonOBJ.assemgentable) {
+                              $("#assembly-gen-container").html(jsonOBJ.assemgentable);
+                        }
+                  }
+                  $("#assembly-update-status").show();
+                  progressEnd();
+          }
+    });
+}
 
 function activateAssemblyInputButton() {
     $('#assembly-input-form-container').dialog({bgiframe: true,autoOpen: false,modal: false,height: 700,width: $(window).width()*0.95,
@@ -934,7 +957,11 @@ function activateAssemblyInputButton() {
             url: assemblyLoadFormServiceUrl,
             data: serviceData,
             dataType: 'json',
+            beforeSend: function() {
+                progressStart();
+            },
             success: function (jsonObj) {
+                        progressEnd();
 		        $('#assembly-input-form-container').html(jsonObj.htmlcontent).dialog("open");
 		        $('.ui-dialog-titlebar-close').removeClass("ui-dialog-titlebar-close").html('<span>X</span>');
 		        $('.ief').ief({
@@ -1046,6 +1073,7 @@ function activateAssemblyInputButton() {
                         });
 		        $('.assembly_ajaxform').ajaxForm({
 		            beforeSubmit: function (formData, jqForm, options) {
+                                    progressStart();
 			            formData.push({name:'sessionid',value:sessionId});
 			            formData.push({name:'entryid',value:entryId});
 			            formData.push({name:'entryfilename',value:entryFileName});
@@ -1062,11 +1090,21 @@ function activateAssemblyInputButton() {
 			                $('#assembly-input-form-container').dialog("close");
 			            }
 			            $("#assembly-form-status").show();
+                                    progressEnd();
 		            }
 		        });
 
 	        }
 	    });
+    });
+    $('#one-assembly-button').click(function(){
+          var serviceData = getServiceContext();
+          callAssemblySaveDefaultService(serviceData);
+    });
+    $('#all-monomer-assemblies-button').click(function(){
+          var serviceData = getServiceContext();
+          serviceData.allmonomerflag = "yes";
+          callAssemblySaveDefaultService(serviceData);
     });
 }
 
