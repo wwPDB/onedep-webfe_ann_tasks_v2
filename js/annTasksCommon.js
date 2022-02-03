@@ -266,7 +266,7 @@ function getDownloadExpFileLabel() {
 }
 
 function display_mol_star(molecule_url){
-    var viewerInstance = new molstar.Viewer('myViewer', {
+    molstar.Viewer.create('myViewer', {
                 extensions: [],
                 layoutIsExpanded: false,
                 layoutShowControls: true,
@@ -280,8 +280,9 @@ function display_mol_star(molecule_url){
                 viewportShowAnimation: false,
                 volumeStreamingDisabled: true
 
-            });
-    viewerInstance.loadAllModelsOrAssemblyFromUrl(molecule_url, 'mmcif', false, { representationParams: { theme: { globalName: 'operator-name' } } });
+            }).then(function(viewerInstance) {   // This could also be viewerInstance => {
+		viewerInstance.loadAllModelsOrAssemblyFromUrl(molecule_url, 'mmcif', false, { representationParams: { theme: { globalName: 'operator-name' } } });
+	    })
 }
 
 function show_model_in_mol_star(){
