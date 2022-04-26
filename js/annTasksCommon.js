@@ -1668,7 +1668,7 @@ function loadFileJsmol(appName, id, filePath, jmolMode) {
 	   setupCmds = " background white; wireframe off; spacefill on; color chain; labels off; slab 100; depth 40; slab on; ";
     } else if (jmolMode == 'secstruct1') {
 	   // setupCmds = " select *; background white; wireframe off; ribbons off; cartoons off; labels off; rockets only; color rockets structure;  slab 100; depth 40; slab on; ";
-        setupCmds = " select *; background white; wireframe off; ribbons off; cartoons on; labels off; spacefill off; color property modelindex; select ligands; spacefill on; slab 100; depth 10; slab on; ";
+        setupCmds = " select *; background white; wireframe off; ribbons off; cartoons on; labels off; spacefill off; color property chainNo; select ligands; spacefill on; slab 100; depth 10; slab on; ";
     } else if (jmolMode == 'secstruct2') {
 	   setupCmds = " select *; background white; wireframe off; ribbons off; cartoons off; labels off; rockets only; color rockets structure;  slab 100; depth 40; slab on; ";
     } else {
