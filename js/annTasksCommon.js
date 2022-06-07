@@ -276,11 +276,14 @@ function getDepId() {
 
 function getMapListDictionary() {
     var fn;
+    var mapList;
     fn = fetch('/service/ann_tasks_v2/launchmolstardisplay?entryid='+getDepId()).then(result => result.json()).then(data => fn = data).then(() => console.log(fn));
-    return fn['htmlcontent'];
+    mapList = fn['htmlcontent'];
+
+    return mapList;
 }
 
-function display_mol_star(molecule_url = 'undefined', {mapsList = []}={}){
+function display_mol_star(molecule_url = 'undefined', {mapList = []}={}){
     molstar.Viewer.create('myViewer', {
                 extensions: [],
                 layoutIsExpanded: false,
@@ -322,7 +325,7 @@ function display_mol_star(molecule_url = 'undefined', {mapsList = []}={}){
     }
 
 function show_model_in_mol_star(){
-    display_mol_star(getModelFileUrl())
+    display_mol_star(getModelFileUrl(), getMapListDictionary())
 }
 
 function uploadFile(serviceUrl, formElementId, progressElementId) {
