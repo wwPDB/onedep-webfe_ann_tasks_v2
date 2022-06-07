@@ -277,13 +277,13 @@ function getDepId() {
 function getMapListDictionary() {
     var fn;
     var mapList;
-    fn = fetch('/service/ann_tasks_v2/launchmolstardisplay?entryid='+getDepId()).then(result => result.json()).then(data => fn = data);
+    fn = fetch('/service/ann_tasks_v2/_molstarMapsJson?entryid='+getDepId()).then(result => result.json()).then(data => fn = data);
     mapList = fn['htmlcontent'];
 
     return mapList;
 }
 
-function display_mol_star(molecule_url = 'undefined', {mapList = []}={}){
+function display_mol_star(molecule_url = 'undefined', {mapsList = []}={}){
     molstar.Viewer.create('myViewer', {
                 extensions: [],
                 layoutIsExpanded: false,
