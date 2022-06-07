@@ -316,8 +316,8 @@ function display_mol_star({molecule_url = 'undefined', mapsList = []}={}){
                             isLazy: false,
                             entryId: mapsList[i]["displayName"]
                         }
+                    );
                 }
-
             })
     }
 
