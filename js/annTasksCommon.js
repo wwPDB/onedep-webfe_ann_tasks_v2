@@ -273,10 +273,11 @@ function getDepId() {
 
     return fn;
 }
-function getMapList() {
-    var mapList;
-    fetch('/service/ann_tasks_v2/launchmolstardisplay?entryid='+getDepId()).then(result => result.json()).then(data => mapList = data).then(() => console.log(mapList));
-    return mapList['htmlcontent']
+
+function getMapListDictionary() {
+    var fn;
+    fn = fetch('/service/ann_tasks_v2/launchmolstardisplay?entryid='+getDepId()).then(result => result.json()).then(data => fn = data).then(() => console.log(fn));
+    return fn['htmlcontent']
 }
 
 function display_mol_star(molecule_url){
