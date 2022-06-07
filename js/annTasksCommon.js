@@ -280,7 +280,7 @@ function getMapListDictionary() {
     return fn['htmlcontent'];
 }
 
-function display_mol_star({molecule_url = 'undefined', mapsList = []}={}){
+function display_mol_star(molecule_url = 'undefined', {mapsList = []}={}){
     molstar.Viewer.create('myViewer', {
                 extensions: [],
                 layoutIsExpanded: false,
