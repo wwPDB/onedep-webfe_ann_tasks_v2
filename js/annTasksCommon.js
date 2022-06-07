@@ -277,10 +277,10 @@ function getDepId() {
 function getMapListDictionary() {
     var fn;
     fn = fetch('/service/ann_tasks_v2/launchmolstardisplay?entryid='+getDepId()).then(result => result.json()).then(data => fn = data).then(() => console.log(fn));
-    return fn['htmlcontent']
+    return fn['htmlcontent'];
 }
 
-function display_mol_star(molecule_url){
+function display_mol_star({molecule_url = 'undefined', mapsList = []}={}){
     molstar.Viewer.create('myViewer', {
                 extensions: [],
                 layoutIsExpanded: false,
@@ -296,9 +296,30 @@ function display_mol_star(molecule_url){
                 volumeStreamingDisabled: true
 
             }).then(function(viewerInstance) {   // This could also be viewerInstance => {
-		viewerInstance.loadAllModelsOrAssemblyFromUrl(molecule_url, 'mmcif', false, { representationParams: { theme: { globalName: 'operator-name' } } });
-	    })
-}
+		if (molecule_url !== 'undefined') {
+            viewerInstance.loadAllModelsOrAssemblyFromUrl(molecule_url, 'mmcif', false, {representationParams: {theme: {globalName: 'operator-name'}}});
+        }
+        for (i = 0; i < mapsList.length; i++) {
+                    viewerInstance.loadVolumeFromUrl(
+                        {
+                            url: mapsList[i]["url_name"],
+                            format: 'dscif',
+                            isBinary: true
+                        },
+                        [{
+                            type: 'absolute',
+                            value: mapsList[i]["contourLevel"],
+                            color: mapsList[i]["mapColor"],
+                            alpha: 0.35
+                        }],
+                        {
+                            isLazy: false,
+                            entryId: mapsList[i]["displayName"]
+                        }
+                }
+
+            })
+    }
 
 function show_model_in_mol_star(){
     display_mol_star(getModelFileUrl())
