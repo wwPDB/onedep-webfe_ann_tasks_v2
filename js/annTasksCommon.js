@@ -278,7 +278,7 @@ function getMapListDictionary() {
     var fn;
     fn = fetch('/service/ann_tasks_v2/molstarMapsJson?entryid='+getDepId()).then(result => result.json()).then(data => fn = data['htmlcontent']);
 
-    return mapList;
+    return fn;
 }
 
 function display_mol_star(molecule_url = 'undefined', {mapsList = []}={}){
