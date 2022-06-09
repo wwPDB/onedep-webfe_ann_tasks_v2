@@ -274,9 +274,9 @@ function getDepId() {
     return fn;
 }
 
-function getMapListDictionary() {
+async function getMapListDictionary() {
     var fn;
-    fn = fetch('/service/ann_tasks_v2/molstarMapsJson?entryid='+getDepId()).then(result => result.json()).then(data => fn = data['htmlcontent']);
+    fn = await fetch('/service/ann_tasks_v2/molstarMapsJson?entryid='+getDepId()).then(result => result.json()).then(data => fn = data['htmlcontent']);
 
     return fn;
 }
