@@ -274,10 +274,10 @@ function getDepId() {
     return fn;
 }
 
-function getMapListDictionary() {
-    fetch('/service/ann_tasks_v2/molstarmapsjson?entryid='+getDepId()).
-    then(result => result.json()).then(data => display_mol_star(getModelFileUrl(), {'mapsList':data['htmlcontent']}));
-}
+//function getMapListDictionary() {
+  //  fetch('/service/ann_tasks_v2/molstarmapsjson?entryid='+getDepId()).
+    //then(result => result.json()).then(data => display_mol_star(getModelFileUrl(), {'mapsList':data['htmlcontent']}));
+//}
 
 function display_mol_star(molecule_url = 'undefined', {mapsList = []}={}){
     molstar.Viewer.create('myViewer', {
@@ -321,7 +321,9 @@ function display_mol_star(molecule_url = 'undefined', {mapsList = []}={}){
     }
 
 function show_model_in_mol_star(){
-    display_mol_star(getModelFileUrl(), getMapListDictionary())
+    fetch('/service/ann_tasks_v2/molstarmapsjson?entryid='+getDepId()).
+    then(result => result.json()).then(data => display_mol_star(getModelFileUrl(), {'mapsList':data['htmlcontent']}));
+    //display_mol_star(getModelFileUrl(), getMapListDictionary())
 }
 
 function uploadFile(serviceUrl, formElementId, progressElementId) {
