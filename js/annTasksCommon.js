@@ -275,9 +275,8 @@ function getDepId() {
 }
 
 function getMapListDictionary() {
-    return new Promise(function() {
-        fetch('/service/ann_tasks_v2/molstarMapsJson?entryid='+getDepId())
-    }).then(result => result.json()).then(data => fn = data['htmlcontent']);
+    fetch('/service/ann_tasks_v2/molstarmapsjson?entryid='+getDepId()).
+    then(result => result.json()).then(data => display_mol_star(getModelFileUrl(), {'mapsList':data['htmlcontent']}));
 }
 
 function display_mol_star(molecule_url = 'undefined', {mapsList = []}={}){
@@ -287,7 +286,7 @@ function display_mol_star(molecule_url = 'undefined', {mapsList = []}={}){
                 layoutShowControls: true,
                 layoutShowRemoteState: false,
                 layoutShowSequence: true,
-                layoutShowLog: false,
+                layoutShowLog: true,
                 layoutShowLeftPanel: false,
 
                 viewportShowExpand: false,
