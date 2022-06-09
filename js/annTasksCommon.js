@@ -274,11 +274,8 @@ function getDepId() {
     return fn;
 }
 
-async function getMapListDictionary() {
-    var fn;
-    fn = await fetch('/service/ann_tasks_v2/molstarMapsJson?entryid='+getDepId()).then(result => result.json()).then(data => fn = data['htmlcontent']);
-
-    return fn;
+function getMapListDictionary() {
+    return new Promise(fetch('/service/ann_tasks_v2/molstarMapsJson?entryid='+getDepId())).then(result => result.json()).then(data => fn = data['htmlcontent']);
 }
 
 function display_mol_star(molecule_url = 'undefined', {mapsList = []}={}){
