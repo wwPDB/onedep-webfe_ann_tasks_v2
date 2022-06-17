@@ -324,7 +324,7 @@ function display_mol_star(molecule_url = 'undefined', {mapsList = []}={}){
 
 function show_model_in_mol_star(){
     fetch('/service/ann_tasks_v2/molstarmapsjson?entryid='+getDepId()).
-    then(result => result.json()).then(data => display_mol_star(getModelFileUrl(), ({'mapsList':JSON.parse(data['htmlcontent']}))));
+    then(result => result.json()).then(data => display_mol_star(getModelFileUrl(), ({'mapsList':JSON.parse(data['htmlcontent'])})));
     //display_mol_star(getModelFileUrl(), getMapListDictionary())
 }
 
