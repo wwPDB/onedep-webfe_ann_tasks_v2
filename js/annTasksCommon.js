@@ -297,7 +297,6 @@ function display_mol_star(molecule_url = 'undefined', {mapsList = []}={}){
                 volumeStreamingDisabled: true
 
             }).then(function(viewerInstance) {   // This could also be viewerInstance => {
-                console.log(mapsList)
 		if (molecule_url !== 'undefined') {
             viewerInstance.loadAllModelsOrAssemblyFromUrl(molecule_url, 'mmcif', false, {representationParams: {theme: {globalName: 'operator-name'}}});
         }
@@ -325,7 +324,7 @@ function display_mol_star(molecule_url = 'undefined', {mapsList = []}={}){
 
 function show_model_in_mol_star(){
     fetch('/service/ann_tasks_v2/molstarmapsjson?entryid='+getDepId()).
-    then(result => result.json()).then(data => display_mol_star(getModelFileUrl(), ({'mapsList':data['htmlcontent']})));
+    then(result => result.json()).then(data => display_mol_star(getModelFileUrl(), ({'mapsList':JSON.parse(data['htmlcontent']}))));
     //display_mol_star(getModelFileUrl(), getMapListDictionary())
 }
 
