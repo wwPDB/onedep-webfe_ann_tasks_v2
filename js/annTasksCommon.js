@@ -275,8 +275,10 @@ function getDepId() {
 }
 
 function getMapListDictionary() {
-  fetch('/service/ann_tasks_v2/molstarmapsjson?entryid='+getDepId()).
-    then(result => result.json()).then(data => ({'mapsList':data['htmlcontent']}));
+    var fn;
+    fetch('/service/ann_tasks_v2/molstarmapsjson?entryid='+getDepId()).
+    then(result => result.json()).then(data => fn = ({'mapsList':data['htmlcontent']}));
+    return fn
 }
 
 function display_mol_star(molecule_url = 'undefined', {mapsList = []}={}){
@@ -295,6 +297,7 @@ function display_mol_star(molecule_url = 'undefined', {mapsList = []}={}){
                 volumeStreamingDisabled: true
 
             }).then(function(viewerInstance) {   // This could also be viewerInstance => {
+                console.log(mapsList)
 		if (molecule_url !== 'undefined') {
             viewerInstance.loadAllModelsOrAssemblyFromUrl(molecule_url, 'mmcif', false, {representationParams: {theme: {globalName: 'operator-name'}}});
         }
