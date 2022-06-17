@@ -274,13 +274,6 @@ function getDepId() {
     return fn;
 }
 
-function getMapListDictionary() {
-    var fn;
-    fetch('/service/ann_tasks_v2/molstarmapsjson?entryid='+getDepId()).
-    then(result => result.json()).then(data => fn = ({'mapsList':data['htmlcontent']}));
-    return fn
-}
-
 function display_mol_star(molecule_url = 'undefined', {mapsList = []}={}){
     molstar.Viewer.create('myViewer', {
                 extensions: [],
@@ -288,7 +281,7 @@ function display_mol_star(molecule_url = 'undefined', {mapsList = []}={}){
                 layoutShowControls: true,
                 layoutShowRemoteState: false,
                 layoutShowSequence: true,
-                layoutShowLog: true,
+                layoutShowLog: false,
                 layoutShowLeftPanel: false,
 
                 viewportShowExpand: false,
@@ -300,7 +293,7 @@ function display_mol_star(molecule_url = 'undefined', {mapsList = []}={}){
 		if (molecule_url !== 'undefined') {
             viewerInstance.loadAllModelsOrAssemblyFromUrl(molecule_url, 'mmcif', false, {representationParams: {theme: {globalName: 'operator-name'}}});
         }
-        mapsList = JSON.parse(mapsList)
+        mapsList = JSON.parse(mapsList) //the returned object from the fetch is a string, this converts to a dictionary
         for (i = 0; i < mapsList.length; i++) {
                     viewerInstance.loadVolumeFromUrl(
                         {
@@ -326,7 +319,6 @@ function display_mol_star(molecule_url = 'undefined', {mapsList = []}={}){
 function show_model_in_mol_star(){
     fetch('/service/ann_tasks_v2/molstarmapsjson?entryid='+getDepId()).
     then(result => result.json()).then(data => display_mol_star(getModelFileUrl(), ({'mapsList':data['htmlcontent']})));
-    //display_mol_star(getModelFileUrl(), getMapListDictionary())
 }
 
 function uploadFile(serviceUrl, formElementId, progressElementId) {
