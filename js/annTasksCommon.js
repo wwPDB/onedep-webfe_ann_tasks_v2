@@ -765,6 +765,24 @@ function updateDownloadOptions(jsonObj) {
             $("#download-pisa-report-files-label").show();
         }
     }
+    if ("checkxmlreportfiles" in jsonObj) {
+        arr = jsonObj.checkxmlreportfiles;
+        htmlS = "";
+        for (var i = 0; i < arr.length; i++) {
+            fn = arr[i];
+            url = "/sessions/" + sessionId + "/" + fn;
+            el = '<span> &nbsp; <a href="' + url + '">' + fn + '</a> </span>'
+            logContext("log file " + i + " " + el);
+            htmlS += el;
+        }
+        if (arr.length > 0) {
+            $("#download-check-xmlreport-files").html(htmlS);
+            $("#download-check-xmlreport-files-label").html("PDBML check reports:");
+            $("#download-check-xmlreport-files").show();
+            $("#download-check-xmlreport-files-label").show();
+        }
+    }
+
     if ("checkreportfiles" in jsonObj) {
         arr = jsonObj.checkreportfiles;
         htmlS = "";
@@ -2293,6 +2311,8 @@ $(document).ready(function () {
     if ($("#download-dialog").length > 0) {
         $("#download-logfiles").hide();
         $("#download-logfiles-label").hide();
+	//$("#download-logfiles-label").css("display","none")
+
         var sObj = getSessionInfo("");
         updateDownloadOptions(sObj);
         //
