@@ -57,6 +57,7 @@
  * 19-Feb-2017     ep     add opening of editor module on page load
  * 04-Oct-2017     zf     add getEntityInfoDetails(), getSymopInfoDetails(), getAsuJsmolLink() & select_entry()
  * 07-Jul-2021     zf     removed 'site-task-form', added set_all_monomers() & $('#add_row_button').click(function() {});
+ * 14-Nov-2023     zf     add entryNmrDataFileName
  */
 //
 // Globals -
@@ -65,6 +66,7 @@ var sessionId = '';
 var entryId = '';
 var entryFileName = '';
 var entryExpFileName = '';
+var entryNmrDataFileName = '';
 var entryCsFileName = '';
 var successFlag = 'false';
 var errorFlag = '';
@@ -106,6 +108,7 @@ var fullTaskIdList = ['#solvent-task-form',
                       '#nmr-cs-atom-name-check-form',
                       '#nmr-rep-model-update-form',
                       '#nmr-cs-update-archive-form',
+                      '#nmr-data-processing-form',
                       '#nmr-cs-processing-form',
                       '#nmr-cs-edit-form',
                      ];
@@ -144,6 +147,7 @@ var fullTaskDict  = {'#solvent-task-form'          : '/service/ann_tasks_v2/solv
                      '#nmr-cs-update-archive-form'      : '/service/ann_tasks_v2/nmr_cs_archive_update',
                      "#nmr-cs-update-form"              : '/service/ann_tasks_v2/nmr_cs_update',
                      "#nmr-cs-misc-checks-form"         : '/service/ann_tasks_v2/nmr_cs_misc_checks',
+                     "#nmr-data-processing-form"        : '/service/ann_tasks_v2/nmr_data_auto_processing',
                      "#nmr-cs-processing-form"          : '/service/ann_tasks_v2/nmr_cs_auto_processing',
                      "#nmr-cs-edit-form"                : '/service/ann_tasks_v2/cs_editor',
 		            };
@@ -348,10 +352,13 @@ function uploadFile(serviceUrl, formElementId, progressElementId) {
                         "value": entryExpFileName
                     });
                     arr.push({
+                        "name": "entrynmrdatafilename",
+                        "value": entryNmrDataFileName
+                    });
+                    arr.push({
                         "name": "entrycsfilename",
                         "value": entryCsFileName
                     });
-
 	      },
 
 	    beforeSend: function () {
@@ -378,6 +385,9 @@ function uploadFile(serviceUrl, formElementId, progressElementId) {
 		        }
 		        if ("entryexpfilename" in jsonObj) {
 		            entryExpFileName = jsonObj.entryexpfilename;
+		        }
+		        if ("entrynmrdatafilename" in jsonObj) {
+		            entryNmrDataFileName = jsonObj.entrynmrdatafilename;
 		        }
 		        if ("entrycsfilename" in jsonObj) {
 		            entryCsFileName = jsonObj.entrycsfilename;
@@ -483,6 +493,9 @@ function uploadFromId(serviceUrl, formElementId) {
 		        }
 		        if ("entryexpfilename" in jsonObj) {
 		            entryExpFileName = jsonObj.entryexpfilename;
+		        }
+		        if ("entrynmrdatafilename" in jsonObj) {
+		            entryNmrDataFileName = jsonObj.entrynmrdatafilename;
 		        }
 		        if ("entrycsfilename" in jsonObj) {
 		            entryCsFileName = jsonObj.entrycsfilename;
@@ -1129,6 +1142,7 @@ function activateAssemblyInputButton() {
 			            formData.push({name:'entryid',value:entryId});
 			            formData.push({name:'entryfilename',value:entryFileName});
 			            formData.push({name:'entryexpfilename',value:entryExpFileName});
+			            formData.push({name:'entrynmrdatafilename',value:entryNmrDataFileName});
 			            formData.push({name:'entrycsfilename',value:entryCsFileName});
 		            },
 		            success: function (jsonOBJ) {
@@ -1347,6 +1361,10 @@ function appendContextToMenuUrls() {
             ret += (/\?/.test(ret) ? '&' : '?') + 'entryexpfilename=' + entryExpFileName;
         }
 
+        if (entryNmrDataFileName.length > 0) {
+            ret += (/\?/.test(ret) ? '&' : '?') + 'entrynmrdatafilename=' + entryNmrDataFileName;
+        }
+
         if (entryCsFileName.length > 0) {
             ret += (/\?/.test(ret) ? '&' : '?') + 'entrycsfilename=' + entryCsFileName;
         }
@@ -1386,6 +1404,9 @@ function assignContext(jsonObj) {
     if ('entryexpfilename' in jsonObj) {
         entryExpFileName = jsonObj.entryexpfilename;
     }
+    if ("entrynmrdatafilename" in jsonObj) {
+        entryNmrDataFileName = jsonObj.entrynmrdatafilename;
+    }
     if ('entrycsfilename' in jsonObj) {
         entryCsFileName = jsonObj.entrycsfilename;
     }
@@ -1396,7 +1417,7 @@ function assignContext(jsonObj) {
 }
 
 function logContext(message) {
-  log("%lc: " + message + " ( session id " + sessionId + " entry id " + entryId + " entry filename " + entryFileName + " entry reflection filename " + entryExpFileName + " entry cs filename " + entryCsFileName + ")");
+  log("%lc: " + message + " ( session id " + sessionId + " entry id " + entryId + " entry filename " + entryFileName + " entry reflection filename " + entryExpFileName + " entry nmr-data filename " + entryNmrDataFileName + " entry cs filename " + entryCsFileName + ")");
 }
 
 function getCurrentContext() {
@@ -1416,6 +1437,10 @@ function getCurrentContext() {
     }
     if ("entryexpfilename" in params) {
         entryExpFileName = params.entryexpfilename;
+    }
+
+    if ("entrynmrdatafilename" in params) {
+        entryNmrDataFileName = params.entrynmrdatafilename;
     }
 
     if ("entrycsfilename" in params) {
@@ -1453,6 +1478,7 @@ function clearServiceContext() {
   entryId='';
   entryFileName='';
   entryExpFileName='';
+  entryNmrDataFileName='';
   entryCsFileName='';
     //standaloneMode='n';
 }
@@ -1464,6 +1490,7 @@ function getServiceContext() {
     sc.entryid = entryId;
     sc.entryfilename = entryFileName;
     sc.entryexpfilename = entryExpFileName;
+    sc.entrynmrdatafilename = entryNmrDataFileName;
     sc.entrycsfilename = entryCsFileName;
     //sc.standalonemode  = standaloneMode;
     return sc;
@@ -1632,6 +1659,9 @@ function taskFormCompletionOp(jsonObj, formId) {
              $(formId + " " + formId + "-inp-1").show();
              $(formId + " fieldset input.my-task-form-submit ").attr("disabled", false);
         }
+        if ((formId == "#nmr-data-processing-form") && (entryNmrDataFileName.length > 0)) {
+             $(formId + " fieldset input.my-task-form-submit ").attr("disabled", false);
+        }
         if (((formId == "#nmr-cs-processing-form") || (formId == "#nmr-cs-edit-form")) && (entryCsFileName.length > 0)) {
              $(formId + " fieldset input.my-task-form-submit ").attr("disabled", false);
         }
@@ -1645,6 +1675,7 @@ function updateTaskFormContent(arr,formId) {
     arr.push({ "name": "entryid",             "value": entryId    });
     arr.push({ "name": "entryfilename",       "value": entryFileName    });
     arr.push({ "name": "entryexpfilename",    "value": entryExpFileName    });
+    arr.push({ "name": "entrynmrdatafilename", "value": entryNmrDataFileName });
     arr.push({ "name": "entrycsfilename",    "value": entryCsFileName    });
     arr.push({ "name": "taskformid",          "value": formId   });
 }
@@ -2242,6 +2273,10 @@ $(document).ready(function () {
                     "value": entryFileName
                 });
                 arr.push({
+                    "name": "entrynmrdatafilename",
+                    "value": entryNmrDataFileName
+                });
+                arr.push({
                     "name": "entrycsfilename",
                     "value": entryCsFileName
                 });
@@ -2338,8 +2373,14 @@ $(document).ready(function () {
             var sObj = getSessionInfo(uploadFileFormId);
             updateAnnotTasksState(sObj);
             //
-            if (($("#nmr-tasks-dialog").length > 0) && (entryCsFileName.length > 0)) {
-                 $("#task-alt-dialog").html("Annotating file: " + entryFileName + ", " + entryCsFileName);
+            if ($("#nmr-tasks-dialog").length > 0) {
+                 if (entryNmrDataFileName.length > 0) {
+                      $("#task-alt-dialog").html("Annotating file: " + entryFileName + ", " + entryNmrDataFileName);
+                 } else if (entryCsFileName.length > 0) {
+                      $("#task-alt-dialog").html("Annotating file: " + entryFileName + ", " + entryCsFileName);
+                 } else {
+                      $("#task-alt-dialog").html("Annotating file: " + entryFileName);
+                 }
             } else if (($("#mapcalc-task-form").length > 0) && (entryExpFileName.length > 0)) {
                  $("#task-alt-dialog").html("Annotating file: " + entryFileName + ", " + entryExpFileName);
             } else {
@@ -2697,6 +2738,10 @@ $(document).ready(function () {
                     "value": entryExpFileName
                 });
                 arr.push({
+                    "name": "entrynmrdatafilename",
+                    "value": entryNmrDataFileName
+                });
+                arr.push({
                     "name": "entrycsfilename",
                     "value": entryCsFileName
                 });
@@ -2857,6 +2902,10 @@ $(document).ready(function () {
                 arr.push({
                     "name": "entryexpfilename",
                     "value": entryExpFileName
+                });
+                arr.push({
+                    "name": "entrynmrdatafilename",
+                    "value": entryNmrDataFileName
                 });
                 arr.push({
                     "name": "entrycsfilename",
@@ -3036,6 +3085,10 @@ $(document).ready(function () {
                     "value": entryExpFileName
                 });
                 arr.push({
+                    "name": "entrynmrdatafilename",
+                    "value": entryNmrDataFileName
+                });
+                arr.push({
                     "name": "entrycsfilename",
                     "value": entryCsFileName
                 });
@@ -3189,6 +3242,10 @@ $(document).ready(function () {
                     "value": entryExpFileName
                 });
                 arr.push({
+                    "name": "entrynmrdatafilename",
+                    "value": entryNmrDataFileName
+                });
+                arr.push({
                     "name": "entrycsfilename",
                     "value": entryCsFileName
                 });
@@ -3267,6 +3324,10 @@ $(document).ready(function () {
 			            "name": "entryexpfilename",
 			            "value": entryExpFileName
 		            });
+	                    arr.push({
+	                            "name": "entrynmrdatafilename",
+	                            "value": entryNmrDataFileName
+	                    });
 		            arr.push({
 			            "name": "entrycsfilename",
 			            "value": entryCsFileName
