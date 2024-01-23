@@ -1979,14 +1979,14 @@ function set_all_monomers(formid, tagid, instIdsText) {
        }
 }
 
-function select_close_contact(tagid, type) {
+function select_close_contact_covalent_bond(formid, nameprefix, tagid, type) {
        var selected_val = 'Select All';
        if (type != '') selected_val = 'Select All ' + type;
        var unselected_val = 'Unselect All';
        if (type != '') unselected_val = 'Unselect All ' + type;
 
        var request = $('#' + tagid).attr('value');
-       $('#update-close-contact-form').find("input[name^='close_contact_']:checkbox").each(function() {
+       $('#' + formid).find("input[name^='" + nameprefix + "']:checkbox").each(function() {
             if (type != '') { 
                  if ($(this).hasClass(type)) {
                       if (request == selected_val)
@@ -2012,9 +2012,9 @@ function select_close_contact(tagid, type) {
        }
 }
 
-function validate_close_contact_form($form) {
+function validate_close_contact_covalent_bond_form($form, type) {
        var selected_count = 0;
-       $form.find('input[name^="close_contact_"]:checkbox').each(function() {
+       $form.find('input[name^="' + type + '"]:checkbox').each(function() {
             if ($(this).is(':checked')) selected_count += 1;
        });
        if (selected_count == 0) {
@@ -2025,13 +2025,15 @@ function validate_close_contact_form($form) {
        return true;
 }
 
-function exit_close_contact_page() {
+function exit_close_contact_covalent_bond_page() {
        $('#update-close-contact-form-data').html('');
+       $('#update-covalent-bond-form-data').html('');
        $('#review-close-contact-page').hide();
+       $('#review-covalent-bond-page').hide();
        $('#mapcalc-task-form, #npcc-mapcalc-task-form, #trans-coord-task-form, #special-position-task-form, #biso-full-task-form').show();
        $('#terminal-atoms-task-form, #geom-valid-task-form, #reflection-file-update-task-form, #mtz-mmcif-semi-auto-conversion-form').show();
        $('#mtz-mmcif-conversion-form, #sf-mmcif-free-r-correction-form, #special-position-update-task-form, #tls-range-correction-form').show();
-       $('#database-related-correction-form, #review-close-contact-form').show();
+       $('#database-related-correction-form, #review-close-contact-form, #review-covalent-bond-form').show();
 }
 
 function processSemeAutoConvertForm(htmlText) {
@@ -2571,7 +2573,7 @@ $(document).ready(function () {
                              $('#mapcalc-task-form, #npcc-mapcalc-task-form, #trans-coord-task-form, #special-position-task-form, #biso-full-task-form').hide();
                              $('#terminal-atoms-task-form, #geom-valid-task-form, #reflection-file-update-task-form, #mtz-mmcif-semi-auto-conversion-form').hide();
                              $('#mtz-mmcif-conversion-form, #sf-mmcif-free-r-correction-form, #special-position-update-task-form, #tls-range-correction-form').hide();
-                             $('#database-related-correction-form, #review-close-contact-form').hide();
+                             $('#database-related-correction-form, #review-close-contact-form, #review-covalent-bond-form').hide();
                              $('#update-close-contact-form-data').html(jsonObj.htmlcontent);
                              $('#review-close-contact-page').show();
                          } else {
@@ -2591,7 +2593,7 @@ $(document).ready(function () {
                 url: '/service/ann_tasks_v2/update_close_contact_content',
                 dataType: 'json',
                 beforeSubmit: function (arr, $form, options) {
-                    if (!validate_close_contact_form($form)) return false;
+                    if (!validate_close_contact_covalent_bond_form($form, 'close_contact_')) return false;
                     progressStart();
                     arr.push({
                         "name": "sessionid",
@@ -2612,7 +2614,74 @@ $(document).ready(function () {
                          alert(jsonObj.errortext);
                     } else {
                          taskFormCompletionOp(jsonObj, "#review-close-contact-form");
-                         exit_close_contact_page();
+                         exit_close_contact_covalent_bond_page();
+                    }
+                    return false;
+                },
+                error: function (data, status, e) {
+                    progressEnd();
+                    alert(e);
+                    return false;
+                }
+            });
+
+            $('#review-covalent-bond-button').click(function () {
+                 var serviceData = getServiceContext();
+                 $.ajax({
+                     url: '/service/ann_tasks_v2/get_covalent_bond_content',
+                     data: serviceData,
+                     dataType: 'json',
+                     beforeSend: function() {
+                         progressStart();
+                     },
+                     success: function (jsonObj) {
+                         progressEnd();
+                         if (("htmlcontent" in jsonObj) && (jsonObj.htmlcontent.length > 0)) {
+                             $('#mapcalc-task-form, #npcc-mapcalc-task-form, #trans-coord-task-form, #special-position-task-form, #biso-full-task-form').hide();
+                             $('#terminal-atoms-task-form, #geom-valid-task-form, #reflection-file-update-task-form, #mtz-mmcif-semi-auto-conversion-form').hide();
+                             $('#mtz-mmcif-conversion-form, #sf-mmcif-free-r-correction-form, #special-position-update-task-form, #tls-range-correction-form').hide();
+                             $('#database-related-correction-form, #review-close-contact-form, #review-covalent-bond-form').hide();
+                             $('#update-covalent-bond-form-data').html(jsonObj.htmlcontent);
+                             $('#review-covalent-bond-page').show();
+                         } else {
+                              $('#review-covalent-bond-form fieldset div.my-task-form-status').html("No covalent bond found.");
+                              $('#review-covalent-bond-form fieldset div.my-task-form-status').show();
+                         }
+                     },
+                     error: function (data, status, e) {
+                         progressEnd();
+                         alert(e);
+                         return false;
+                     }
+                 });
+            });
+
+            $('#update-covalent-bond-form').ajaxForm({
+                url: '/service/ann_tasks_v2/update_covalent_bond_content',
+                dataType: 'json',
+                beforeSubmit: function (arr, $form, options) {
+                    if (!validate_close_contact_covalent_bond_form($form, 'covalent_bond_')) return false;
+                    progressStart();
+                    arr.push({
+                        "name": "sessionid",
+                        "value": sessionId
+                    });
+                    arr.push({
+                        "name": "entryid",
+                        "value": entryId
+                    });
+                    arr.push({
+                        "name": "entryfilename",
+                        "value": entryFileName
+                    });
+                },
+                success: function (jsonObj) {
+                    progressEnd();
+                    if (jsonObj.errorflag) {
+                         alert(jsonObj.errortext);
+                    } else {
+                         taskFormCompletionOp(jsonObj, "#review-covalent-bond-form");
+                         exit_close_contact_covalent_bond_page();
                     }
                     return false;
                 },
