@@ -22,13 +22,13 @@
                     <div class="bs-sidebar hidden-print" role="complementary">
                         <ul class="nav bs-sidenav">
                             <li><a href="#sec_1">Misc Checks</a></li>
+                            <li><a href="#sec_1a">em_map Category</a></li>
                             <li><a href="#sec_2">Dictionary (V5)</a></li>
                             <li><a href="#sec_2a">PDBML XML</a></li>
                             <li><a href="#sec_3">Entry report</a></li>
                             <li><a href="#sec_3a">Geometry report</a></li>
                             <li><a href="#sec_5">X-ray Exp</a></li>
                             <li><a href="#sec_6">EMDB XML Header</a></li>
-                            <li><a href="#sec_6a">em_map Category</a></li>
                             <li><a href="#sec_7">Special Positions</a></li>
                             <li><a href="#sec_10">Review Report Downloads</a></li>
                         </ul>
@@ -42,6 +42,11 @@
                         <h3 id="sec_1">Miscellaneous Check Report</h3>
                     </div>
                     %(misc-check-report)s
+
+                    <div class="page-header">
+                        <h3 id="sec_1a">em_map Category Reports</h3>
+                    </div>
+                    %(em-map-check-report)s
 
                     <div class="page-header">
                         <h3 id="sec_2">Dictionary V5 Internal Check Report</h3>
@@ -72,11 +77,6 @@
                         <h3 id="sec_6">EMDB XML Header Report</h3>
                     </div>
                     %(emd-xml-header-report)s
-
-                    <div class="page-header">
-                        <h3 id="sec_6a">em_map Category Reports</h3>
-                    </div>
-                    %(em-map-check-report)s
 
                     <div class="page-header">
                         <h3 id="sec_7">Special Position Check Report</h3>
