@@ -8,7 +8,9 @@
 
 <body>
   <div id="wrap">
-    <!--#include virtual="/ann_tasks_v2/includes/page_header_bs.html"-->
+      
+      <!-- Common page navigation -->
+      <!--#include virtual="/ann_tasks_v2/includes/page_header_bs.html"-->
 
     <div class="container">
       <div class="page-header">
@@ -22,16 +24,6 @@
           the calculation of <code>pdbx_communication_feature</code> by clicking on the <b>Update</b> button below. There should be no
           row left in the above table after recalculation.
         </div>
-  
-        <!-- Data Table -->
-        <div id="ccd-table-container" class="row">
-          <form id="ccd-editor-form">
-            <div class="form-group">
-              <input class="btn btn-primary pull-right" id="coord-update-button" type="submit" value="Update" /><br />
-            </div>
-            <div id="ccd-table-content"></div>
-          </form>
-        </div>
       </div>
 
       <!-- progress spinner -->
@@ -43,7 +35,17 @@
         </div>
       </div>
 
-      <br />
+	    <br/> 
+
+      <!-- Data Table -->
+      <div id="ccd-table-container" class="row">
+        <div class="form-group">
+          <div id="ccd-table-content"></div>
+        </div>
+        <input class="btn btn-primary pull-right" id="pcm-update-button" type="submit" value="Update" />
+      </br>
+      </br>
+      </div>
 
     </div> <!-- End main page content container -->
 

@@ -3430,6 +3430,8 @@ $(document).ready(function () {
          uploadMultipleFiles(uploadMultiServiceUrl, "#upload-cs-auth", "#uploadProgress");
      }
 
+    // pcm
+
     if ($("#pcm-dialog").length > 0) {
         function backend_call(inputData, displaytag) {
             $.ajax({
@@ -3462,6 +3464,12 @@ $(document).ready(function () {
                 }
             });
         }
+
+        $('#pcm-update-button').click(function() {
+            var serviceData = getServiceContext();
+            serviceData.display_identifier = entryId;
+            backend_call(serviceData, 'ccd-table-content');
+        });
 
         var serviceData = getServiceContext();
         serviceData.display_identifier = entryId;
