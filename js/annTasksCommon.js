@@ -189,6 +189,10 @@ var uploadMultiServiceUrl = '/service/ann_tasks_v2/uploadmulti';
 var csFormServiceUrl = '/service/ann_tasks_v2/manualcseditorform';
 var csEditorSavingServiceUrl = '/service/ann_tasks_v2/manualcseditorsave';
 var csUpdateServiceUrl = '/service/ann_tasks_v2/manualcseditorupdate';
+
+// PCM
+var pcmFormServiceUrl = '/service/ann_tasks_v2/pcm_get_ccd_form';
+
 //
 // Globals for JSmol
 //
@@ -3425,6 +3429,52 @@ $(document).ready(function () {
          //$("#nmr-cs-upload-check-form").hide();
          uploadMultipleFiles(uploadMultiServiceUrl, "#upload-cs-auth", "#uploadProgress");
      }
+
+    // pcm
+
+    if ($("#pcm-dialog").length > 0) {
+        function backend_call(inputData, displaytag) {
+            $.ajax({
+                url: pcmFormServiceUrl,
+                data: inputData,
+                dataType: 'json',
+                beforeSend: function() {
+                    progressStart();
+                },
+                success: function (jsonObj) {
+                    if (jsonObj.statuscode=='running') {
+                        var inputData1 = inputData;
+                        inputData1.semaphore = jsonObj.semaphore;
+                        inputData1.delay = 2;
+                        t = setTimeout(function() { backend_call(inputData1, displaytag) }, 3000);
+                    } else if (jsonObj.statuscode=='ok') {
+                        progressEnd();
+                        $('#' + displaytag).html(jsonObj.htmlcontent);
+                        $('#' + displaytag).show();
+                        $('#' + displaytag).addClass('has_value');
+                    } else {
+                        progressEnd();
+                        alert(jsonObj.statustext);
+                    }
+                },
+                error: function (data, status, e) {
+                    progressEnd();
+                    alert(e);
+                    return false;
+                }
+            });
+        }
+
+        $('#pcm-update-button').click(function() {
+            var serviceData = getServiceContext();
+            serviceData.display_identifier = entryId;
+            backend_call(serviceData, 'ccd-table-content');
+        });
+
+        var serviceData = getServiceContext();
+        serviceData.display_identifier = entryId;
+        backend_call(serviceData, 'ccd-table-content');
+    }
 
     //    <!-- make the nav item for the current page active -->
     $('.nav a[href="' + pagePath + '"]').parent().addClass('active');
