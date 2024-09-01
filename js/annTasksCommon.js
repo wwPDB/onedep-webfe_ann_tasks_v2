@@ -56,8 +56,9 @@
  * 13-Jan-2017     ep     add special-position-update-task-form support
  * 19-Feb-2017     ep     add opening of editor module on page load
  * 04-Oct-2017     zf     add getEntityInfoDetails(), getSymopInfoDetails(), getAsuJsmolLink() & select_entry()
- * 07-Jul-2021     zf     removed 'site-task-form', added set_all_monomers() & $('#add_row_button').click(function() {});
+ * 07-Jul-2021     zf     removed 'site-task-form', added set_all_monomers(), and $('#add_row_button').click(function() {});
  * 14-Nov-2023     zf     add entryNmrDataFileName
+ * 09-Aug-2024     zf     add uploadBiomtServiceUrl, assemblyAcceptServiceUrl,  and #point-suite-dialog section
  */
 //
 // Globals -
@@ -83,7 +84,7 @@ var fullTaskIdList = ['#solvent-task-form',
                       '#secstruct-task-form',
                       '#nafeature-task-form',
                       // '#site-task-form',
-		              '#extracheck-task-form',
+                      '#extracheck-task-form',
                       '#valreport-task-form',
                       '#mapcalc-task-form',
                       '#npcc-mapcalc-task-form',
@@ -101,7 +102,7 @@ var fullTaskIdList = ['#solvent-task-form',
                       '#terminal-atoms-task-form',
                       '#merge-xyz-task-form',
                       '#geom-valid-task-form',
-		              '#dict-check-task-form',
+                      '#dict-check-task-form',
                       '#reassign-altids-task-form',
                       '#reflection-file-update-task-form',
                       '#nmr-cs-upload-check-form',
@@ -111,34 +112,34 @@ var fullTaskIdList = ['#solvent-task-form',
                       '#nmr-data-processing-form',
                       '#nmr-cs-processing-form',
                       '#nmr-cs-edit-form',
-                     ];
+];
 
-var uploadFileTaskIdList = [ '#tls-range-correction-form', '#mtz-mmcif-conversion-form' ]
+var uploadFileTaskIdList = [ '#tls-range-correction-form', '#mtz-mmcif-conversion-form' ];
 
 var fullTaskDict  = {'#solvent-task-form'          : '/service/ann_tasks_v2/solventcalc',
-		             '#link-task-form'             : '/service/ann_tasks_v2/linkcalc',
-		             '#secstruct-task-form'        : '/service/ann_tasks_v2/secstructcalc',
-		             '#nafeature-task-form'        : '/service/ann_tasks_v2/naFeaturescalc',
-		             // '#site-task-form'             : '/service/ann_tasks_v2/sitecalc',
-		             '#dict-check-task-form'       : '/service/ann_tasks_v2/dictcheck',
-		             '#extracheck-task-form'       : '/service/ann_tasks_v2/extracheck',
-		             '#valreport-task-form'        : '/service/ann_tasks_v2/valreport',
-		             '#mapcalc-task-form'          : '/service/ann_tasks_v2/mapcalc',
-		             '#npcc-mapcalc-task-form'     : '/service/ann_tasks_v2/npccmapcalc',
-		             '#dcc-calc-task-form'         : '/service/ann_tasks_v2/dcccalc',
-		             '#dcc-refine-calc-task-form'  : '/service/ann_tasks_v2/dccrefinecalc',
-		             '#trans-coord-task-form'      : '/service/ann_tasks_v2/transformcoordcalc',
-		             '#special-position-task-form' : '/service/ann_tasks_v2/specialpositioncalc',
-		             '#special-position-update-task-form' : '/service/ann_tasks_v2/specialpositionupdate',
-                             '#tls-range-correction-form' : '/service/ann_tasks_v2/tlsrangecorrection',
-                             '#mtz-mmcif-conversion-form' : '/service/ann_tasks_v2/mtz_mmcif_conversion',
-                             '#sf-mmcif-free-r-correction-form' : '/service/ann_tasks_v2/correcting_sf_free_r_set',
-                             '#database-related-correction-form' : '/service/ann_tasks_v2/correcting_database_releated',
-                             '#mtz-mmcif-semi-auto-conversion-form' : '/service/ann_tasks_v2/mtz_mmcif_conversion',
-		             '#biso-full-task-form'        : '/service/ann_tasks_v2/bisofullcalc',
-		             '#terminal-atoms-task-form'   : '/service/ann_tasks_v2/terminalatomscalc',
-		             '#merge-xyz-task-form'        : '/service/ann_tasks_v2/mergexyzcalc',
-		             '#geom-valid-task-form'       : '/service/ann_tasks_v2/geomvalidcalc',
+                     '#link-task-form'             : '/service/ann_tasks_v2/linkcalc',
+                     '#secstruct-task-form'        : '/service/ann_tasks_v2/secstructcalc',
+                     '#nafeature-task-form'        : '/service/ann_tasks_v2/naFeaturescalc',
+                     // '#site-task-form'             : '/service/ann_tasks_v2/sitecalc',
+                     '#dict-check-task-form'       : '/service/ann_tasks_v2/dictcheck',
+                     '#extracheck-task-form'       : '/service/ann_tasks_v2/extracheck',
+                     '#valreport-task-form'        : '/service/ann_tasks_v2/valreport',
+                     '#mapcalc-task-form'          : '/service/ann_tasks_v2/mapcalc',
+                     '#npcc-mapcalc-task-form'     : '/service/ann_tasks_v2/npccmapcalc',
+                     '#dcc-calc-task-form'         : '/service/ann_tasks_v2/dcccalc',
+                     '#dcc-refine-calc-task-form'  : '/service/ann_tasks_v2/dccrefinecalc',
+                     '#trans-coord-task-form'      : '/service/ann_tasks_v2/transformcoordcalc',
+                     '#special-position-task-form' : '/service/ann_tasks_v2/specialpositioncalc',
+                     '#special-position-update-task-form' : '/service/ann_tasks_v2/specialpositionupdate',
+                     '#tls-range-correction-form' : '/service/ann_tasks_v2/tlsrangecorrection',
+                     '#mtz-mmcif-conversion-form' : '/service/ann_tasks_v2/mtz_mmcif_conversion',
+                     '#sf-mmcif-free-r-correction-form' : '/service/ann_tasks_v2/correcting_sf_free_r_set',
+                     '#database-related-correction-form' : '/service/ann_tasks_v2/correcting_database_releated',
+                     '#mtz-mmcif-semi-auto-conversion-form' : '/service/ann_tasks_v2/mtz_mmcif_conversion',
+                     '#biso-full-task-form'        : '/service/ann_tasks_v2/bisofullcalc',
+                     '#terminal-atoms-task-form'   : '/service/ann_tasks_v2/terminalatomscalc',
+                     '#merge-xyz-task-form'        : '/service/ann_tasks_v2/mergexyzcalc',
+                     '#geom-valid-task-form'       : '/service/ann_tasks_v2/geomvalidcalc',
                      '#reassign-altids-task-form'  : '/service/ann_tasks_v2/reassignaltidscalc',
                      '#reflection-file-update-task-form' : '/service/ann_tasks_v2/update_reflection_file',
                      '#nmr-cs-upload-check-form'        : '/service/ann_tasks_v2/nmr_cs_upload_check',
@@ -150,10 +151,11 @@ var fullTaskDict  = {'#solvent-task-form'          : '/service/ann_tasks_v2/solv
                      "#nmr-data-processing-form"        : '/service/ann_tasks_v2/nmr_data_auto_processing',
                      "#nmr-cs-processing-form"          : '/service/ann_tasks_v2/nmr_cs_auto_processing',
                      "#nmr-cs-edit-form"                : '/service/ann_tasks_v2/cs_editor',
-		            };
+};
 
 var uploadFromIdServiceUrl = '/service/ann_tasks_v2/uploadfromid';
 var uploadServiceUrl = '/service/ann_tasks_v2/upload';
+var uploadBiomtServiceUrl = '/service/ann_tasks_v2/upload_biomt';
 var newSessionServiceUrl = '/service/ann_tasks_v2/newsession';
 var endSessionServiceUrl = '/service/ann_tasks_v2/finish';
 
@@ -161,6 +163,7 @@ var jmolLaunchServiceUrl = '/service/ann_tasks_v2/launchjmol';
 var jmolWithMapLaunchServiceUrl = '/service/ann_tasks_v2/launchjmolwithmap';
 var mapFlag=false;
 var omitMapFlag=false;
+var assemblyAcceptServiceUrl = '/service/ann_tasks_v2/assemblyaccept';
 var assemblyCalcServiceUrl = '/service/ann_tasks_v2/assemblycalc';
 var assemblyRestartServiceUrl = '/service/ann_tasks_v2/assemblyrestart';
 var assemblySelectServiceUrl = '/service/ann_tasks_v2/assemblyselect';
@@ -2700,6 +2703,83 @@ $(document).ready(function () {
             $("#task-alt-dialog").html("No file uploaded");
             $("#task-alt-dialog").show();
         }
+    }
+
+    if ($("#point-suite-dialog").length > 0) {
+
+        $('#upload-biomt').ajaxForm({
+            url: uploadBiomtServiceUrl,
+            dataType: 'json',
+            beforeSubmit: function (arr, $form, options) {
+                progressStart();
+                arr.push({
+                    "name": "sessionid",
+                    "value": sessionId
+                });
+                arr.push({
+                    "name": "entryid",
+                    "value": entryId
+                });
+                arr.push({
+                    "name": "entryfilename",
+                    "value": entryFileName
+                });
+                arr.push({
+                    "name": "entryexpfilename",
+                    "value": entryExpFileName
+                });
+                arr.push({
+                    "name": "entrynmrdatafilename",
+                    "value": entryNmrDataFileName
+                });
+                arr.push({
+                    "name": "entrycsfilename",
+                    "value": entryCsFileName
+                });
+            },
+            success: function (jsonObj) {
+                progressEnd();
+                if (jsonObj.errorflag) alert(jsonObj.errortext);
+                else {
+    	            if (("summary" in jsonObj) && (jsonObj.summary.length > 0)) $("#summary_info").val(jsonObj.summary);
+    	            if (("textcontent" in jsonObj) && (jsonObj.textcontent.length > 0)) $("#detail_info").val(jsonObj.textcontent);
+                    if (("model_url" in jsonObj) && (jsonObj.model_url.length > 0)) {
+                        var mList = [];
+                        if (("molstar_maps" in jsonObj) && (jsonObj.molstar_maps.length > 0)) mList = jsonObj.molstar_maps;
+                        display_mol_star(jsonObj.model_url, ({"mapsList": mList}));
+                    }
+                    if (("successfulflag" in jsonObj) && (jsonObj.successfulflag == "yes"))
+                         $("#accept_button").attr("disabled", false);
+                    else $("#accept_button").attr("disabled", true);
+                }
+                return false;
+            },
+            error: function (data, status, e) {
+                progressEnd();
+                alert(e);
+                return false;
+            }
+        });
+
+        $('#accept_button').click(function () {
+            var serviceData = getServiceContext();
+            $.ajax({ url: assemblyAcceptServiceUrl, data: serviceData, dataType: 'json',
+                beforeSend: function() {
+                    progressStart();
+                },
+                success: function (jsonObj) {
+                    progressEnd();
+                    if (jsonObj.errorflag) alert(jsonObj.errortext);
+                    else alert(jsonObj.textcontent);
+                    return false;
+                },
+                error: function (data, status, e) {
+                    progressEnd();
+                    alert(e);
+                    return false;
+                }
+            });
+        });
     }
 
     //    <!-- edit operations -->

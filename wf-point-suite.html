@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!--#include virtual="/ann_tasks_v2/includes/head_common_bs.html"-->
+    <title>Annotation Tasks Module</title>
+  </head>
+
+  <style>
+    #myViewer {
+      width: 950px;
+      height:700px;
+      position: relative;
+    }
+  </style>
+
+  <body onLoad="show_model_in_mol_star()">
+    <div id="wrap">
+
+      <!-- Common page navigation -->
+      <!--#include virtual="/ann_tasks_v2/includes/page_header_bs.html"-->
+
+      <div class="container">        <!-- Begin main page content container -->
+        <div class="page-header">
+          <h3>Annotation Tasks  <small>PointSuite</small>             <small id="span_identifier" class="pull-right displaynone"> </small></h3>
+        </div>
+
+        <div id="point-suite-dialog" title="PointSuite">
+          <table>
+            <tr style="">
+              <td style="border-style:none;" rowspan="5"><div id="myViewer">show_model_in_mol_star()</div></td>
+               <td  style="border-style:none; ">
+                <form id="upload-biomt" style="margin-left:10px;" enctype="multipart/formdata" action="/service/ann_tasks_v2/upload_biomt" method="post" class="form-inline" role="form">
+                  <fieldset>
+                    <div class="form-group">
+                      <label for="biomt-file" class="label-control">BIOMT file</label>
+                      <input class="form-control" type="file" id="biomt-file" name="file" value="" />
+                      <br/>
+                      <input id="id-form-button" class="btn" type="submit" value="Upload" style="margin-top:10px;color:#fff;background-color:#008000;" />
+                    </div>
+                  </fieldset>
+                </form>
+              </td>
+            </tr>
+            <tr style="">
+               <td style="border-style:none;height:20px;"></td>
+            </tr>
+            <tr>
+              <td style="text-align:center;border-style:none;">
+                <!-- form style="color:#fff;background-color:#008000;" -->
+                  <input id="accept_button" type="button" value="Accept Result" disabled style="margin-left:10px;width:100%;height:50px;border-radius:10px;color:#fff;background-color:#008000;" />
+                <!-- /form -->
+              </td>
+            </tr>
+            <tr style="">
+              <td style="border-style:none;vertical-align:top;height:490px;" rowspan="2">
+                <div style="margin-left:12px;margin-top:15px;"><h5>Summary Information:</h5></div>
+                <textarea id="summary_info" style="margin-left:12px;vertical-align:top;" cols="37" rows="10" wrap></textarea>
+              </td>
+            </tr>
+          </table>
+          <table>
+            <tr style="">
+              <td style="border-style:none;" colspan="2">
+                <h4>Matrices/Logging Information:</h4>
+                <textarea id="detail_info" style="margin-left:15px;" cols="150" rows="38" wrap></textarea>
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <!-- progress spinner -->
+        <div id="loading">
+          <div id="loadingcontent">
+            <p id="loadingspinner"> Running calculation ...        </p>
+          </div>
+        </div>
+
+      </div> <!-- End main page content container -->
+
+    </div> <!-- end wrap -->
+
+    <!--#include virtual="/ann_tasks_v2/includes/page_javascript_bs.html"-->
+    <!--#include virtual="/ann_tasks_v2/includes/page_footer_bs.html"-->
+  </body>
+</html>
+
+
