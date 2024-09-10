@@ -59,6 +59,7 @@
  * 07-Jul-2021     zf     removed 'site-task-form', added set_all_monomers(), and $('#add_row_button').click(function() {});
  * 14-Nov-2023     zf     add entryNmrDataFileName
  * 09-Aug-2024     zf     add uploadBiomtServiceUrl, assemblyAcceptServiceUrl,  and #point-suite-dialog section
+ * 10-Sep-2024     zf     add MissingPcmStatus variable
  */
 //
 // Globals -
@@ -74,6 +75,7 @@ var errorFlag = '';
 var errotText = '';
 var wfStatus='';
 var AssemblyStatus='';
+var MissingPcmStatus='';
 var standaloneMode='';
 var pagePath ='';
 var entStatusCode='';
@@ -1462,6 +1464,10 @@ function getCurrentContext() {
         AssemblyStatus = params.assemblystatus;
     }
 
+    if ("missingpcmstatus" in params) {
+        MissingPcmStatus = params.missingpcmstatus;
+    }
+
     if ("standalonemode" in params) {
         standaloneMode = params.standalonemode;
     }
@@ -2096,17 +2102,23 @@ $(document).ready(function () {
     // Warn about out of workflow condition ---
     //
     if ($("#wf-startup-dialog").length > 0) {
-        var html_text = "";
+        var html_text = "<ul>";
 	if (wfStatus == "completed") {
-            html_text = "Workflow status update successful!";
-	} else if (wfStatus == "failed"){
-            html_text = "Workflow status update failed!   Proceed with caution!";
+            html_text += "<li>Workflow status update successful!</li>";
+	} else if (wfStatus == "failed") {
+            html_text += "<li>Workflow status update failed!   Proceed with caution!</li>";
 	}
 
         var AssemblyInfo = getAssemblyInfo();
         if (AssemblyInfo != "") {
-             html_text += "<br/><br/><strong>" + AssemblyInfo + "</strong>";
+             html_text += "<li><strong>" + AssemblyInfo + "</strong></li>";
         }
+
+        if (MissingPcmStatus == "yes") {
+             html_text += '<li><span style="font-weight:bold;color:red;">CCD(s) missing PCM/PTM annotation</span></li>';
+        }
+
+        html_text += "</ul>";
 
         $("#op-status").html(html_text);
     }
