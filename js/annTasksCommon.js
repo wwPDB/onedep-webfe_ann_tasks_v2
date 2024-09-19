@@ -60,6 +60,7 @@
  * 14-Nov-2023     zf     add entryNmrDataFileName
  * 09-Aug-2024     zf     add uploadBiomtServiceUrl, assemblyAcceptServiceUrl,  and #point-suite-dialog section
  * 10-Sep-2024     zf     add MissingPcmStatus variable
+ * 19-Sep-2024     zf     add 'flag' parameter to show_model_in_mol_star() function
  */
 //
 // Globals -
@@ -329,8 +330,8 @@ function display_mol_star(molecule_url = 'undefined', {mapsList = []}={}){
             })
     }
 
-function show_model_in_mol_star(){
-    fetch('/service/ann_tasks_v2/molstarmapsjson?entryid='+getDepId()).
+function show_model_in_mol_star(flag){
+    fetch('/service/ann_tasks_v2/molstarmapsjson?entryid='+getDepId()+'&primarymapflag='+flag).
     then(result => result.json()).then(data => display_mol_star(getModelFileUrl(), ({'mapsList':data['htmlcontent']})));
 }
 
