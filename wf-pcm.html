@@ -20,9 +20,15 @@
 
       <div id="pcm-dialog">
         <div class="panel-body">
-          You need to annotate <code>pdbx_chem_comp_pcm</code> in the following CCDs. After updating each row, please re-run
-          the calculation of <code>pdbx_modification_feature</code> by clicking on the <b>Update</b> button below. There should be no
-          row left in the above table after recalculation.
+          <ul>
+            <li>You need to first check that all of these protein modifications are correctly chopped.</li>
+            <li>Then, if they are linked modifications, use Review Module to check if the link between the modification group and 
+                the peptide residue is real. If the link is incorrect, please remove the corresponding struct_conn record.</li>
+            <li>Once you are confident the modification is correctly handled, you need to annotate <code>pdbx_chem_comp_pcm</code> 
+                in the following CCDs.</li>
+          </ul>
+          After updating each row, please re-run the calculation of the <code>pdbx-modification_feature</code> by clicking on the
+          <b>Update</b> button below. There should be no row left in the below table after recalculation.
         </div>
       </div>
 
