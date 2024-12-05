@@ -76,6 +76,7 @@ var errorFlag = '';
 var errotText = '';
 var wfStatus='';
 var AssemblyStatus='';
+var ProvenanceStatus='';
 var MissingPcmStatus='';
 var standaloneMode='';
 var pagePath ='';
@@ -1383,10 +1384,6 @@ function appendContextToMenuUrls() {
             ret += (/\?/.test(ret) ? '&' : '?') + 'standalonemode=' + standaloneMode;
         }
 
-        if (AssemblyStatus.length > 0) {
-            ret += (/\?/.test(ret) ? '&' : '?') + 'assemblystatus=' + AssemblyStatus;
-        }
-
         //console.log("index = " + index + " href " + href + " ret = " + ret);
 
         return ret;
@@ -1464,6 +1461,10 @@ function getCurrentContext() {
     if ("assemblystatus" in params) {
         AssemblyStatus = params.assemblystatus;
     }
+
+    if ("provenance" in params) {
+        ProvenanceStatus = params.provenance;
+    } 
 
     if ("missingpcmstatus" in params) {
         MissingPcmStatus = params.missingpcmstatus;
@@ -2110,13 +2111,21 @@ $(document).ready(function () {
             html_text += "<li>Workflow status update failed!   Proceed with caution!</li>";
 	}
 
-        var AssemblyInfo = getAssemblyInfo();
-        if (AssemblyInfo != "") {
-             html_text += "<li><strong>" + AssemblyInfo + "</strong></li>";
+        if (AssemblyStatus == "existed") {
+            html_text += "<li><strong>Assembly information already present in model file!</strong></li>";
+            if (ProvenanceStatus == "Y") {
+                html_text += '<li><span style="font-weight:bold;color:green;">Assembly annotation was inferred from a previously annotated entry</span></li>';
+            } else if (ProvenanceStatus == "N") {
+                html_text += '<li><span style="font-weight:bold;color:orange;">Assembly annotation was provided by the depositors</span></li>';
+            }
+        } else if (AssemblyStatus == "updated") {
+            html_text += "<li><strong>Successfully filled in unit assembly information!</strong></li>";
+        } else if (AssemblyStatus == "failed") {
+            html_text += "<li><strong>Failed to automatically fill in assembly information!</strong></li>";
         }
 
         if (MissingPcmStatus == "yes") {
-             html_text += '<li><span style="font-weight:bold;color:red;">CCD(s) missing PCM/PTM annotation</span></li>';
+            html_text += '<li><span style="font-weight:bold;color:red;">CCD(s) missing PCM/PTM annotation</span></li>';
         }
 
         html_text += "</ul>";
