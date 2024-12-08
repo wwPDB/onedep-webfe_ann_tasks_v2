@@ -61,6 +61,7 @@
  * 09-Aug-2024     zf     add uploadBiomtServiceUrl, assemblyAcceptServiceUrl,  and #point-suite-dialog section
  * 10-Sep-2024     zf     add MissingPcmStatus variable
  * 19-Sep-2024     zf     add 'flag' parameter to show_model_in_mol_star() function
+ * 07-Dec-2024     zf     add ProvenanceStatus variable
  */
 //
 // Globals -
