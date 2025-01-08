@@ -333,7 +333,7 @@ function display_mol_star(molecule_url = 'undefined', {mapsList = []}={}){
     }
 
 function show_model_in_mol_star(flag){
-    fetch('/service/ann_tasks_v2/molstarmapsjson?entryid='+getDepId()+'&primarymapflag='+flag).
+    fetch('/service/ann_tasks_v2/molstarmapsjson?entryid='+getDepId()+'&primarymapflag='+flag+'&sessionid='+sessionId).
     then(result => result.json()).then(data => display_mol_star(getModelFileUrl(), ({'mapsList':data['htmlcontent']})));
 }
 
