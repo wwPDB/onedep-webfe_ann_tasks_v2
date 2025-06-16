@@ -207,6 +207,8 @@ var pcmFormServiceUrl = '/service/ann_tasks_v2/pcm_get_ccd_form';
 var jsmolAppOpen={};
 var jsmolAppDict={};
 
+// For molstar
+var molstarViewer            = undefined;
 
 /*window.log = function(){
   log.history = log.history || [];   // store logs to an array for reference
@@ -306,11 +308,13 @@ function display_mol_star(molecule_url = 'undefined', {mapsList = []}={}){
                 volumeStreamingDisabled: true
 
             }).then(function(viewerInstance) {   // This could also be viewerInstance => {
+		molstarViewer = viewerInstance;
+
 		if (molecule_url !== 'undefined') {
-            viewerInstance.loadAllModelsOrAssemblyFromUrl(molecule_url, 'mmcif', false, {representationParams: {theme: {globalName: 'operator-name'}}});
-        }
-        mapsList = JSON.parse(mapsList) //the returned object from the fetch is a string, this converts to a dictionary
-        for (i = 0; i < mapsList.length; i++) {
+		    viewerInstance.loadAllModelsOrAssemblyFromUrl(molecule_url, 'mmcif', false, {representationParams: {theme: {globalName: 'operator-name'}}});
+		}
+		mapsList = JSON.parse(mapsList) //the returned object from the fetch is a string, this converts to a dictionary
+		for (i = 0; i < mapsList.length; i++) {
                     viewerInstance.loadVolumeFromUrl(
                         {
                             url: mapsList[i]["url_name"],
@@ -336,6 +340,25 @@ function show_model_in_mol_star(flag){
     fetch('/service/ann_tasks_v2/molstarmapsjson?entryid='+getDepId()+'&primarymapflag='+flag+'&sessionid='+sessionId).
     then(result => result.json()).then(data => display_mol_star(getModelFileUrl(), ({'mapsList':data['htmlcontent']})));
 }
+
+// For review covalent bonds
+function inspect(structConnId) {
+    if (molstarViewer?.plugin) {
+        molstar.PluginExtensions.wwPDBStructConn.inspectStructConn(molstarViewer.plugin, entryId, structConnId).then(nSelectedAtoms => {
+            if (nSelectedAtoms < 2) {
+                alert('Some of the interacting atoms were not found \n(Link is likely not present in the viewed assembly, try again with model view)')
+            } else {
+
+            }
+        });
+    }
+}
+function clearInspections() {
+    if (molstarViewer?.plugin) {
+        molstar.PluginExtensions.wwPDBStructConn.clearStructConnInspections(molstarViewer.plugin, entryId);
+    }
+}
+
 
 function uploadFile(serviceUrl, formElementId, progressElementId) {
     // Upload model of sf file -
@@ -2672,10 +2695,12 @@ $(document).ready(function () {
                              $('#mtz-mmcif-conversion-form, #sf-mmcif-free-r-correction-form, #special-position-update-task-form, #tls-range-correction-form').hide();
                              $('#database-related-correction-form, #review-close-contact-form, #review-covalent-bond-form').hide();
                              $('#update-covalent-bond-form-data').html(jsonObj.htmlcontent);
+			     show_model_in_mol_star(); // Molstar rendering -- might get EM maps...
                              $('#review-covalent-bond-page').show();
                          } else {
-                              $('#review-covalent-bond-form fieldset div.my-task-form-status').html("No covalent bond found.");
-                              $('#review-covalent-bond-form fieldset div.my-task-form-status').show();
+                             $('#review-covalent-bond-form fieldset div.my-task-form-status').html("No covalent bond found.");
+                             $('#review-covalent-bond-form fieldset div.my-task-form-status').show();
+			     clearInspections();
                          }
                      },
                      error: function (data, status, e) {
