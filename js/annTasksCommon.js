@@ -1736,8 +1736,8 @@ function initJsmolApp(appName, id, buttonId) {
     var ySize=700;
     Jmol._binaryTypes = [".map",".omap",".gz",".jpg",".png",".zip",".jmol",".bin",".smol",".spartan",".mrc",".pse"];
     Info = {
-        j2sPath: "/assets/applets/jmol-latest/jsmol/j2s",
-        serverURL: "/assets/applets/jmol-latest/jsmol/php/jsmol.php",
+        j2sPath: "/assets/js/jsmol-latest/j2s",
+        // serverURL: "/assets/applets/jmol-latest/jsmol/php/jsmol.php",
 	    //serverURL: "http://chemapps.stolaf.edu/jmol/jsmol/php/jsmol.php",
         // Setting this did not solve the menu occlusion problem ..
         zIndexBase: 20000,
