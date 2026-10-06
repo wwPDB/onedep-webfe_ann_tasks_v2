@@ -303,7 +303,7 @@ function display_mol_star(molecule_url = 'undefined', {mapsList = []}={}){
                 layoutShowLeftPanel: false,
 
                 viewportShowExpand: false,
-                viewportShowSelectionMode: false,
+                viewportShowSelectionMode: true,
                 viewportShowAnimation: false,
                 volumeStreamingDisabled: true
 
